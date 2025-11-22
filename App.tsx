@@ -462,7 +462,7 @@ const App: React.FC = () => {
 
         {viewState === ViewState.ADMIN && (
           <AdminPanel
-            posts={currentLanguagePosts}
+            posts={Object.values(allPosts).flat()}
             onAddPost={handleAddPost}
             onDeletePost={handleDeletePost}
           />

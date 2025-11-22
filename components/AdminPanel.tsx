@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { BlogPost } from '../types';
 import { storageService } from '../services/storage';
+import { RichTextEditor } from './RichTextEditor';
 import {
   Plus, Save, Database, Image as ImageIcon, X, Trash2, Eye, FileText,
   Bold, Italic, List, Heading2, Quote, Search, CheckCircle, CircleDashed, AlertTriangle, LogOut, Edit, EyeOff
@@ -304,7 +305,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
   }
 
   return (
-    <div className="max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500 mb-24 px-4 sm:px-6 lg:px-8">
+    <div className="max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500 mb-24 px-4 sm:px-6 lg:px-8">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 md:mb-8 gap-4">
         <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-ink">Editorial Desk</h2>
         <div className="flex flex-wrap items-center gap-2 sm:gap-4 w-full md:w-auto">
@@ -339,7 +340,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
       </div>
 
       {activeTab === 'create' ? (
-        <form onSubmit={(e) => handleSubmit(e)} className="space-y-6 sm:space-y-8 bg-white p-4 sm:p-6 md:p-10 border border-zinc-100 shadow-xl relative">
+        <form onSubmit={(e) => handleSubmit(e)} className="space-y-6 sm:space-y-8 bg-white p-6 sm:p-8 md:p-10 lg:p-12 border border-zinc-100 shadow-xl relative">
 
           {/* Editing indicator */}
           {editingPostId && (
@@ -461,38 +462,22 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
           {/* Content Editor with Preview */}
           <div>
             <div className="flex justify-between items-center mb-4">
-              <label className="block font-mono text-xs uppercase tracking-widest text-zinc-400">Content (HTML Supported)</label>
-              {!showPreview && (
-                <div className="flex gap-2">
-                  <button type="button" onClick={() => insertFormat('<b>', '</b>')} className="p-1 hover:bg-zinc-100 rounded" title="Bold"><Bold size={16} /></button>
-                  <button type="button" onClick={() => insertFormat('<i>', '</i>')} className="p-1 hover:bg-zinc-100 rounded" title="Italic"><Italic size={16} /></button>
-                  <button type="button" onClick={() => insertFormat('<h3>', '</h3>')} className="p-1 hover:bg-zinc-100 rounded" title="Heading"><Heading2 size={16} /></button>
-                  <button type="button" onClick={() => insertFormat('<blockquote>', '</blockquote>')} className="p-1 hover:bg-zinc-100 rounded" title="Quote"><Quote size={16} /></button>
-                  <button type="button" onClick={() => insertFormat('<ul>\n<li>', '</li>\n</ul>')} className="p-1 hover:bg-zinc-100 rounded" title="List"><List size={16} /></button>
-                  <div className="relative">
-                    <input type="file" onChange={handleEditorImageUpload} className="absolute inset-0 opacity-0 cursor-pointer w-6" />
-                    <button type="button" className="p-1 hover:bg-zinc-100 rounded" title="Image"><ImageIcon size={16} /></button>
-                  </div>
-                </div>
-              )}
+              <label className="block font-mono text-xs uppercase tracking-widest text-zinc-400">Content</label>
             </div>
 
             {showPreview ? (
-              <div className="w-full border border-zinc-200 p-6 min-h-[400px] rounded-sm bg-white">
-                <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: content }} />
+              <div className="w-full border-2 border-zinc-200 p-6 min-h-[400px] rounded bg-white">
+                <div className="prose prose-lg max-w-none font-serif" dangerouslySetInnerHTML={{ __html: content }} />
               </div>
             ) : (
-              <textarea
-                ref={editorRef}
+              <RichTextEditor
                 value={content}
-                onChange={(e) => setContent(e.target.value)}
-                className="w-full font-serif text-lg leading-relaxed border border-zinc-200 p-4 min-h-[400px] focus:outline-none focus:border-ink rounded-sm"
-                placeholder="Write your story..."
-                required
+                onChange={setContent}
+                placeholder="Write your story here... Use the toolbar above to format your text."
               />
             )}
             <p className="mt-2 text-[10px] text-zinc-400 font-mono">
-              {showPreview ? 'Preview mode - Click "Edit" to continue editing' : 'Line breaks will be automatically converted to paragraphs upon publishing.'}
+              {showPreview ? 'Preview mode - Click \"Edit\" to continue editing' : 'Use the formatting toolbar or write HTML directly for advanced formatting.'}
             </p>
           </div>
 
@@ -593,7 +578,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
         /* Manage Tab */
         <div className="bg-white border border-zinc-100 shadow-xl min-h-[600px]">
           {/* Toolbar */}
-          <div className="p-6 border-b border-zinc-100 flex flex-col md:flex-row justify-between gap-4">
+          <div className="p-6 sm:p-8 border-b border-zinc-100 flex flex-col md:flex-row justify-between gap-4">
             <div className="relative flex-1">
               <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" />
               <input
