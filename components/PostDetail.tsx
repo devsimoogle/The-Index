@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { BlogPost, Language, Comment, ReactionType } from '../types';
 import { UI_TRANSLATIONS } from '../constants';
-import { ArrowLeft, Send, Clock, Tag, Hash, Heart, Lightbulb, Bookmark, Volume2, Loader2, Square } from 'lucide-react';
+import { ArrowLeft, Send, Clock, Tag, Hash, Heart, Lightbulb, Bookmark, Volume2, Loader2, Square, ThumbsUp, Smile, PartyPopper, BookOpen, Search, Sparkles } from 'lucide-react';
 import { generateBlogSpeech } from '../services/geminiService';
 
 interface PostDetailProps {
@@ -290,8 +290,8 @@ export const PostDetail: React.FC<PostDetailProps> = ({
           <button
             onClick={handleToggleAudio}
             className={`flex items-center gap-3 px-4 py-2 rounded-full transition-all duration-300 ${isPlaying
-                ? 'bg-red-50 text-red-600 ring-1 ring-red-200 hover:bg-red-100'
-                : 'bg-zinc-900 text-white hover:bg-zinc-700'
+              ? 'bg-red-50 text-red-600 ring-1 ring-red-200 hover:bg-red-100'
+              : 'bg-zinc-900 text-white hover:bg-zinc-700'
               }`}
           >
             {isAudioLoading ? (
@@ -329,8 +329,8 @@ export const PostDetail: React.FC<PostDetailProps> = ({
           <button
             onClick={() => onReact('heart')}
             className={`group flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-300 ${reactions.heart > 0
-                ? 'bg-red-50 text-red-600 ring-1 ring-red-100'
-                : 'bg-zinc-50 text-zinc-500 hover:bg-zinc-100'
+              ? 'bg-red-50 text-red-600 ring-1 ring-red-100'
+              : 'bg-zinc-50 text-zinc-500 hover:bg-zinc-100'
               }`}
           >
             <Heart
@@ -343,8 +343,8 @@ export const PostDetail: React.FC<PostDetailProps> = ({
           <button
             onClick={() => onReact('insightful')}
             className={`group flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-300 ${reactions.insightful > 0
-                ? 'bg-amber-50 text-amber-600 ring-1 ring-amber-100'
-                : 'bg-zinc-50 text-zinc-500 hover:bg-zinc-100'
+              ? 'bg-amber-50 text-amber-600 ring-1 ring-amber-100'
+              : 'bg-zinc-50 text-zinc-500 hover:bg-zinc-100'
               }`}
           >
             <Lightbulb
@@ -357,8 +357,8 @@ export const PostDetail: React.FC<PostDetailProps> = ({
           <button
             onClick={() => onReact('bookmark')}
             className={`group flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-300 ${reactions.bookmark > 0
-                ? 'bg-blue-50 text-blue-600 ring-1 ring-blue-100'
-                : 'bg-zinc-50 text-zinc-500 hover:bg-zinc-100'
+              ? 'bg-blue-50 text-blue-600 ring-1 ring-blue-100'
+              : 'bg-zinc-50 text-zinc-500 hover:bg-zinc-100'
               }`}
           >
             <Bookmark
@@ -446,17 +446,25 @@ export const PostDetail: React.FC<PostDetailProps> = ({
                 required
               />
 
-              {/* Emoji Picker Bar */}
-              <div className="flex gap-2 mt-2 overflow-x-auto pb-2">
-                {['👍', '❤️', '💡', '🤔', '🎉', '📚', '🧐', '✨'].map(emoji => (
+              {/* Reaction Picker Bar */}
+              <div className="flex gap-2 mt-4 overflow-x-auto pb-2 scrollbar-hide">
+                {[
+                  { icon: ThumbsUp, emoji: '👍' },
+                  { icon: Heart, emoji: '❤️' },
+                  { icon: Lightbulb, emoji: '💡' },
+                  { icon: Smile, emoji: '😊' },
+                  { icon: PartyPopper, emoji: '🎉' },
+                  { icon: BookOpen, emoji: '📚' },
+                  { icon: Sparkles, emoji: '✨' }
+                ].map(({ icon: Icon, emoji }) => (
                   <button
                     key={emoji}
                     type="button"
                     onClick={() => addEmoji(emoji)}
-                    className="hover:bg-zinc-100 p-1.5 rounded text-lg transition-colors"
-                    aria-label={`Add ${emoji} emoji`}
+                    className="group p-2 rounded-full hover:bg-zinc-100 transition-all duration-300 hover:scale-110 active:scale-95 border border-transparent hover:border-zinc-200"
+                    aria-label={`Add ${emoji} reaction`}
                   >
-                    {emoji}
+                    <Icon size={18} className="text-zinc-400 group-hover:text-zinc-800 transition-colors" />
                   </button>
                 ))}
               </div>

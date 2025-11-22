@@ -4,6 +4,7 @@ import { Header } from './components/Header';
 import { PostList } from './components/PostList';
 import { PostDetail } from './components/PostDetail';
 import { LibrarianBot } from './components/LibrarianBot';
+import { Preloader } from './components/Preloader';
 import { AdminPanel } from './components/AdminPanel';
 import { UI_TRANSLATIONS } from './constants';
 import { BlogPost, ViewState, Language, Comment, SortOrder, PostReactions, ReactionType } from './types';
@@ -49,6 +50,8 @@ const App: React.FC = () => {
 
   const initialState = getInitialState();
 
+  // State
+  const [isLoading, setIsLoading] = useState(true);
   // Provide fallback defaults if initialState properties are missing
   const [viewState, setViewState] = useState<ViewState>(initialState?.viewState || ViewState.HOME);
   // Store ID instead of object so it survives language switches correctly
@@ -313,8 +316,12 @@ const App: React.FC = () => {
       });
   }, [currentLanguagePosts]);
 
+  if (isLoading) {
+    return <Preloader onComplete={() => setIsLoading(false)} />;
+  }
+
   return (
-    <div className="min-h-screen bg-white text-ink selection:bg-black selection:text-white">
+    <div className="min-h-screen bg-white text-ink selection:bg-black selection:text-white font-sans">
       <Header
         setViewState={setViewState}
         viewState={viewState}
