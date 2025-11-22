@@ -48,12 +48,12 @@ async function decodeAudioData(
   return buffer;
 }
 
-export const PostDetail: React.FC<PostDetailProps> = ({ 
-  post, 
+export const PostDetail: React.FC<PostDetailProps> = ({
+  post,
   relatedPosts,
-  onBack, 
-  language, 
-  comments, 
+  onBack,
+  language,
+  comments,
   onAddComment,
   onSelectPost,
   reactions,
@@ -62,12 +62,12 @@ export const PostDetail: React.FC<PostDetailProps> = ({
   const t = UI_TRANSLATIONS[language] || UI_TRANSLATIONS['en'];
   const [authorName, setAuthorName] = useState('');
   const [commentText, setCommentText] = useState('');
-  
+
   // Audio State
   const [isPlaying, setIsPlaying] = useState(false);
   const [isAudioLoading, setIsAudioLoading] = useState(false);
   const [playingIndex, setPlayingIndex] = useState<number | null>(null);
-  
+
   const audioContextRef = useRef<AudioContext | null>(null);
   const sourceNodeRef = useRef<AudioBufferSourceNode | null>(null);
   const isStoppedRef = useRef(false);
@@ -75,24 +75,24 @@ export const PostDetail: React.FC<PostDetailProps> = ({
   // Parse content into blocks to enable paragraph-level highlighting
   const contentBlocks = useMemo(() => {
     if (!post || !post.content) return [];
-    
+
     try {
       const div = document.createElement('div');
       div.innerHTML = post.content;
-      
+
       // Get all paragraphs and headers, filtering out empty ones
       const children = Array.from(div.children);
-      
+
       // If no children found (e.g. raw text), fallback
       if (children.length === 0) return [post.content || ""];
 
       const blocks: string[] = children
         .map(node => node.outerHTML)
         .filter(html => html.replace(/<[^>]*>/g, '').trim().length > 0);
-        
+
       // If parsing results in empty (e.g. raw text), fallback to single block
       if (blocks.length === 0) return [post.content || ""];
-      
+
       return blocks;
     } catch (e) {
       console.warn("Failed to parse content blocks", e);
@@ -115,11 +115,11 @@ export const PostDetail: React.FC<PostDetailProps> = ({
 
   const formatDate = (dateString: string) => {
     try {
-       const date = new Date(dateString);
-       if (isNaN(date.getTime())) return dateString; // Fallback if invalid date
-       return date.toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' });
-    } catch(e) {
-       return dateString;
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return dateString; // Fallback if invalid date
+      return date.toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' });
+    } catch (e) {
+      return dateString;
     }
   };
 
@@ -152,7 +152,7 @@ export const PostDetail: React.FC<PostDetailProps> = ({
       }
 
       const audioData = await generateBlogSpeech(textToRead);
-      
+
       if (isStoppedRef.current) return; // Check if stopped while generating
 
       if (!audioData) {
@@ -167,7 +167,7 @@ export const PostDetail: React.FC<PostDetailProps> = ({
       }
 
       const audioBuffer = await decodeAudioData(audioData, audioContextRef.current, 24000);
-      
+
       const source = audioContextRef.current.createBufferSource();
       source.buffer = audioBuffer;
       source.connect(audioContextRef.current.destination);
@@ -237,7 +237,7 @@ export const PostDetail: React.FC<PostDetailProps> = ({
 
   return (
     <article className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <button 
+      <button
         onClick={onBack}
         className="group flex items-center gap-2 text-zinc-400 hover:text-black transition-colors mb-8 font-mono text-sm uppercase tracking-widest"
       >
@@ -247,8 +247,8 @@ export const PostDetail: React.FC<PostDetailProps> = ({
 
       {post.coverImage && (
         <div className="mb-12 rounded-sm overflow-hidden shadow-sm aspect-video md:aspect-[21/9] relative bg-zinc-100">
-          <img 
-            src={post.coverImage} 
+          <img
+            src={post.coverImage}
             alt={`Cover for ${post.title}`}
             className="w-full h-full object-cover"
           />
@@ -269,7 +269,7 @@ export const PostDetail: React.FC<PostDetailProps> = ({
           <span className="flex items-center gap-2"><Tag size={10} /> Slug: {slug}</span>
           <span className="flex items-center gap-2"><Clock size={10} /> Published: {post.date}</span>
         </div>
-        
+
         <h1 className={`text-4xl md:text-6xl lg:text-7xl font-serif text-ink leading-tight mb-10 transition-colors duration-300 ${playingIndex === -1 ? 'text-blue-600 bg-blue-50/50' : ''}`}>
           {post.title}
         </h1>
@@ -281,30 +281,29 @@ export const PostDetail: React.FC<PostDetailProps> = ({
               <span className="text-ink border-b border-zinc-200 pb-0.5">{post.author}</span>
             </div>
             <div>
-               <span className="block text-zinc-300 text-[10px] uppercase tracking-widest mb-1">{t.time}</span>
-               {post.readTime}
+              <span className="block text-zinc-300 text-[10px] uppercase tracking-widest mb-1">{t.time}</span>
+              {post.readTime}
             </div>
           </div>
 
           {/* Listen Button */}
-          <button 
+          <button
             onClick={handleToggleAudio}
-            className={`flex items-center gap-3 px-4 py-2 rounded-full transition-all duration-300 ${
-                isPlaying 
-                ? 'bg-red-50 text-red-600 ring-1 ring-red-200 hover:bg-red-100' 
+            className={`flex items-center gap-3 px-4 py-2 rounded-full transition-all duration-300 ${isPlaying
+                ? 'bg-red-50 text-red-600 ring-1 ring-red-200 hover:bg-red-100'
                 : 'bg-zinc-900 text-white hover:bg-zinc-700'
-            }`}
+              }`}
           >
-             {isAudioLoading ? (
-                <Loader2 size={16} className="animate-spin" />
-             ) : isPlaying ? (
-                <Square size={16} fill="currentColor" />
-             ) : (
-                <Volume2 size={16} />
-             )}
-             <span className="font-mono text-xs uppercase tracking-widest">
-                {isAudioLoading ? 'Buffering...' : isPlaying ? 'Stop Audio' : 'Listen to Entry'}
-             </span>
+            {isAudioLoading ? (
+              <Loader2 size={16} className="animate-spin" />
+            ) : isPlaying ? (
+              <Square size={16} fill="currentColor" />
+            ) : (
+              <Volume2 size={16} />
+            )}
+            <span className="font-mono text-xs uppercase tracking-widest">
+              {isAudioLoading ? 'Buffering...' : isPlaying ? 'Stop Audio' : 'Listen to Entry'}
+            </span>
           </button>
         </div>
       </header>
@@ -312,7 +311,7 @@ export const PostDetail: React.FC<PostDetailProps> = ({
       <div className="prose prose-lg md:prose-xl prose-zinc max-w-3xl mx-auto font-serif leading-loose">
         {/* Render content blocks individually for highlighting */}
         {contentBlocks.map((block, index) => (
-          <div 
+          <div
             key={index}
             dangerouslySetInnerHTML={{ __html: block }}
             className={`transition-all duration-500 rounded px-2 -mx-2 ${playingIndex === index ? 'bg-blue-50 text-blue-900 shadow-sm scale-[1.01]' : ''}`}
@@ -324,38 +323,50 @@ export const PostDetail: React.FC<PostDetailProps> = ({
         <p className="font-serif italic text-zinc-500 text-lg mb-8">
           {t.endOfEntry}
         </p>
-        
-        {/* Reaction Bar */}
-        <div className="flex justify-center gap-8">
-           <button 
-             onClick={() => onReact('heart')}
-             className="group flex flex-col items-center gap-2 hover:scale-110 transition-transform"
-           >
-             <div className="p-3 rounded-full bg-zinc-50 text-zinc-400 group-hover:bg-red-50 group-hover:text-red-500 transition-colors">
-               <Heart size={24} fill={reactions.heart > 0 ? "currentColor" : "none"} />
-             </div>
-             <span className="font-mono text-xs text-zinc-400">{reactions.heart || 0}</span>
-           </button>
-           
-           <button 
-             onClick={() => onReact('insightful')}
-             className="group flex flex-col items-center gap-2 hover:scale-110 transition-transform"
-           >
-             <div className="p-3 rounded-full bg-zinc-50 text-zinc-400 group-hover:bg-amber-50 group-hover:text-amber-500 transition-colors">
-               <Lightbulb size={24} fill={reactions.insightful > 0 ? "currentColor" : "none"} />
-             </div>
-             <span className="font-mono text-xs text-zinc-400">{reactions.insightful || 0}</span>
-           </button>
 
-           <button 
-             onClick={() => onReact('bookmark')}
-             className="group flex flex-col items-center gap-2 hover:scale-110 transition-transform"
-           >
-             <div className="p-3 rounded-full bg-zinc-50 text-zinc-400 group-hover:bg-blue-50 group-hover:text-blue-500 transition-colors">
-               <Bookmark size={24} fill={reactions.bookmark > 0 ? "currentColor" : "none"} />
-             </div>
-             <span className="font-mono text-xs text-zinc-400">{reactions.bookmark || 0}</span>
-           </button>
+        {/* Reaction Bar */}
+        <div className="flex justify-center gap-4">
+          <button
+            onClick={() => onReact('heart')}
+            className={`group flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-300 ${reactions.heart > 0
+                ? 'bg-red-50 text-red-600 ring-1 ring-red-100'
+                : 'bg-zinc-50 text-zinc-500 hover:bg-zinc-100'
+              }`}
+          >
+            <Heart
+              size={20}
+              className={`transition-transform duration-300 ${reactions.heart > 0 ? 'fill-current scale-110' : 'group-hover:scale-110'}`}
+            />
+            <span className="font-mono text-sm font-medium">{reactions.heart || 0}</span>
+          </button>
+
+          <button
+            onClick={() => onReact('insightful')}
+            className={`group flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-300 ${reactions.insightful > 0
+                ? 'bg-amber-50 text-amber-600 ring-1 ring-amber-100'
+                : 'bg-zinc-50 text-zinc-500 hover:bg-zinc-100'
+              }`}
+          >
+            <Lightbulb
+              size={20}
+              className={`transition-transform duration-300 ${reactions.insightful > 0 ? 'fill-current scale-110' : 'group-hover:scale-110'}`}
+            />
+            <span className="font-mono text-sm font-medium">{reactions.insightful || 0}</span>
+          </button>
+
+          <button
+            onClick={() => onReact('bookmark')}
+            className={`group flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-300 ${reactions.bookmark > 0
+                ? 'bg-blue-50 text-blue-600 ring-1 ring-blue-100'
+                : 'bg-zinc-50 text-zinc-500 hover:bg-zinc-100'
+              }`}
+          >
+            <Bookmark
+              size={20}
+              className={`transition-transform duration-300 ${reactions.bookmark > 0 ? 'fill-current scale-110' : 'group-hover:scale-110'}`}
+            />
+            <span className="font-mono text-sm font-medium">{reactions.bookmark || 0}</span>
+          </button>
         </div>
       </div>
 
@@ -366,17 +377,17 @@ export const PostDetail: React.FC<PostDetailProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {relatedPosts.map(rp => (
               <div key={rp.id} onClick={() => onSelectPost(rp)} className="cursor-pointer group">
-                 {rp.coverImage && (
-                   <div className="mb-4 aspect-video overflow-hidden bg-zinc-100">
-                     <img src={rp.coverImage} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                   </div>
-                 )}
+                {rp.coverImage && (
+                  <div className="mb-4 aspect-video overflow-hidden bg-zinc-100">
+                    <img src={rp.coverImage} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  </div>
+                )}
                 <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 mb-2 block">{formatDate(rp.date)}</span>
                 <h4 className="font-serif text-xl leading-tight text-ink group-hover:underline decoration-1 underline-offset-4 transition-all">{rp.title}</h4>
                 <div className="flex flex-wrap gap-1 mt-3">
-                   {Array.isArray(rp.tags) && rp.tags.slice(0, 2).map(tag => (
-                      <span key={tag} className="text-[9px] uppercase tracking-wider text-zinc-400 border border-zinc-100 px-1.5 py-0.5">{tag}</span>
-                   ))}
+                  {Array.isArray(rp.tags) && rp.tags.slice(0, 2).map(tag => (
+                    <span key={tag} className="text-[9px] uppercase tracking-wider text-zinc-400 border border-zinc-100 px-1.5 py-0.5">{tag}</span>
+                  ))}
                 </div>
               </div>
             ))}
@@ -387,7 +398,7 @@ export const PostDetail: React.FC<PostDetailProps> = ({
       {/* Comments Section */}
       <div className="max-w-2xl mx-auto mt-24 mb-24">
         <h3 className="font-serif text-2xl mb-8 text-ink">{t.comments} <span className="text-zinc-400 text-lg ml-2">({comments.length})</span></h3>
-        
+
         {/* List */}
         <div className="space-y-8 mb-12">
           {comments.length > 0 ? (
@@ -414,8 +425,8 @@ export const PostDetail: React.FC<PostDetailProps> = ({
           <h4 className="font-mono text-xs uppercase tracking-widest text-zinc-400 mb-6">{t.postComment}</h4>
           <form onSubmit={handleSubmitComment} className="space-y-6">
             <div>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={authorName}
                 onChange={(e) => setAuthorName(e.target.value)}
                 placeholder={t.namePlaceholder}
@@ -425,7 +436,7 @@ export const PostDetail: React.FC<PostDetailProps> = ({
               />
             </div>
             <div className="relative">
-              <textarea 
+              <textarea
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
                 placeholder={t.messagePlaceholder}
@@ -434,25 +445,25 @@ export const PostDetail: React.FC<PostDetailProps> = ({
                 className="w-full border-b border-zinc-200 py-2 text-sm font-sans focus:outline-none focus:border-zinc-800 transition-colors placeholder-zinc-300 resize-none"
                 required
               />
-              
+
               {/* Emoji Picker Bar */}
               <div className="flex gap-2 mt-2 overflow-x-auto pb-2">
-                 {['👍', '❤️', '💡', '🤔', '🎉', '📚', '🧐', '✨'].map(emoji => (
-                   <button
-                     key={emoji}
-                     type="button"
-                     onClick={() => addEmoji(emoji)}
-                     className="hover:bg-zinc-100 p-1.5 rounded text-lg transition-colors"
-                     aria-label={`Add ${emoji} emoji`}
-                   >
-                     {emoji}
-                   </button>
-                 ))}
+                {['👍', '❤️', '💡', '🤔', '🎉', '📚', '🧐', '✨'].map(emoji => (
+                  <button
+                    key={emoji}
+                    type="button"
+                    onClick={() => addEmoji(emoji)}
+                    className="hover:bg-zinc-100 p-1.5 rounded text-lg transition-colors"
+                    aria-label={`Add ${emoji} emoji`}
+                  >
+                    {emoji}
+                  </button>
+                ))}
               </div>
             </div>
             <div className="flex justify-end">
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 className="bg-ink text-white px-6 py-2 text-xs font-mono uppercase tracking-widest hover:bg-zinc-700 transition-colors flex items-center gap-2"
               >
                 {t.submit} <Send size={12} />

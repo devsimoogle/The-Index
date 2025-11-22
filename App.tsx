@@ -442,7 +442,7 @@ const App: React.FC = () => {
                 <div>
                   <span className="block font-mono text-[10px] uppercase tracking-widest text-zinc-400 mb-1">{t.course}</span>
                   <span className="font-serif text-xl">LIS403</span>
-                  <span className="block text-sm text-zinc-500 mt-1">Library Information Systems</span>
+                  <span className="block text-sm text-zinc-500 mt-1">Internet and Web Design</span>
                 </div>
                 <div>
                   <span className="block font-mono text-[10px] uppercase tracking-widest text-zinc-400 mb-1">{t.creator}</span>
@@ -476,7 +476,7 @@ const App: React.FC = () => {
             <h4 className="font-serif font-bold text-lg mb-2">The Index.</h4>
             <p className="font-sans text-xs text-zinc-400 max-w-xs leading-relaxed">
               Curating the world's knowledge, one bit at a time.
-              Classwork Project for LIS403.
+              Assignment for LIS403 (Internet and Web Design).
             </p>
             <p className="font-mono text-[10px] text-zinc-400 mt-6 uppercase tracking-widest">
               Created by Olajuwon
@@ -484,14 +484,8 @@ const App: React.FC = () => {
           </div>
           <div className="flex gap-8">
             <div className="flex flex-col gap-2">
-              <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400">Social</span>
-              <a href="#" className="text-sm hover:text-zinc-600">Twitter</a>
-              <a href="#" className="text-sm hover:text-zinc-600">LinkedIn</a>
-            </div>
-            <div className="flex flex-col gap-2">
-              <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400">Legal</span>
+              <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400">System</span>
               <button onClick={() => setViewState(ViewState.ADMIN)} className="text-sm hover:text-zinc-600 text-left">Admin Login</button>
-              <a href="#" className="text-sm hover:text-zinc-600">Privacy</a>
             </div>
           </div>
         </div>
