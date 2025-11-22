@@ -1,0 +1,10 @@
+# Server .env file
+.env
+
+# Node modules
+node_modules/
+dist/
+
+# Logs
+*.log
+npm-debug.log*
