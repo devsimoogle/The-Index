@@ -43,11 +43,11 @@ export const Preloader: React.FC<{ onComplete: () => void }> = ({ onComplete }) 
 
             <div className="relative z-10 flex flex-col items-center w-full max-w-md px-8">
                 {/* Main Title Animation */}
-                <h1 className="font-serif text-6xl md:text-8xl font-bold tracking-tighter mb-8 animate-pulse">
+                <h1 className="font-serif text-6xl md:text-8xl font-bold tracking-tighter mb-8 animate-pulse text-center">
                     {progress < 100 ? (
                         <span className="font-mono text-4xl md:text-6xl">{progress}%</span>
                     ) : (
-                        "INDEX"
+                        "THE INDEX"
                     )}
                 </h1>
 

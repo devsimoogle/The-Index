@@ -5,6 +5,7 @@ import { PostList } from './components/PostList';
 import { PostDetail } from './components/PostDetail';
 import { LibrarianBot } from './components/LibrarianBot';
 import { Preloader } from './components/Preloader';
+import { PostLoader } from './components/PostLoader';
 import { AdminPanel } from './components/AdminPanel';
 import { UI_TRANSLATIONS } from './constants';
 import { BlogPost, ViewState, Language, Comment, SortOrder, PostReactions, ReactionType } from './types';
@@ -174,8 +175,11 @@ const App: React.FC = () => {
     ).slice(0, 3);
   }, [selectedPost, currentLanguagePosts]);
 
+  // ... inside App component
+  const [isPostLoading, setIsPostLoading] = useState(false);
+
   const handleSelectPost = (post: BlogPost, e?: React.MouseEvent) => {
-    // Prevent default behavior if event is provided (prevents anchor tag navigation)
+    // Prevent default behavior if event is provided
     if (e) {
       e.preventDefault();
       e.stopPropagation();
@@ -189,15 +193,22 @@ const App: React.FC = () => {
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     window.history.pushState({ postId: post.id }, '', newUrl);
 
-    // Update state
+    // Update state with loading effect
     setSelectedPostId(post.id);
     setViewState(ViewState.POST);
+    setIsPostLoading(true);
     window.scrollTo(0, 0);
+
+    // Simulate loading delay for cinematic effect
+    setTimeout(() => {
+      setIsPostLoading(false);
+    }, 1500);
   };
 
   const handleBack = () => {
     setSelectedPostId(null);
     setViewState(ViewState.HOME);
+    setIsPostLoading(false);
   };
 
   const handleSearch = (query: string) => {
@@ -386,18 +397,22 @@ const App: React.FC = () => {
           </>
         )}
 
-        {viewState === ViewState.POST && selectedPost && (
-          <PostDetail
-            post={selectedPost}
-            relatedPosts={relatedPosts}
-            onBack={handleBack}
-            language={language}
-            comments={comments && comments[selectedPost.id] ? comments[selectedPost.id] : []}
-            onAddComment={handleAddComment}
-            onSelectPost={handleSelectPost}
-            reactions={reactions[selectedPost.id] || { heart: 0, insightful: 0, bookmark: 0 }}
-            onReact={(type) => handleReaction(selectedPost.id, type)}
-          />
+        {viewState === ViewState.POST && (
+          isPostLoading ? (
+            <PostLoader />
+          ) : selectedPost ? (
+            <PostDetail
+              post={selectedPost}
+              relatedPosts={relatedPosts}
+              onBack={handleBack}
+              language={language}
+              comments={comments && comments[selectedPost.id] ? comments[selectedPost.id] : []}
+              onAddComment={handleAddComment}
+              onSelectPost={handleSelectPost}
+              reactions={reactions[selectedPost.id] || { heart: 0, insightful: 0, bookmark: 0 }}
+              onReact={(type) => handleReaction(selectedPost.id, type)}
+            />
+          ) : null
         )}
 
         {viewState === ViewState.ARCHIVE && (
