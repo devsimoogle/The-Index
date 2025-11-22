@@ -5,7 +5,7 @@ import { storageService } from '../services/storage';
 import { TipTapEditor } from './TipTapEditor';
 import {
   Plus, Save, Database, Image as ImageIcon, X, Trash2, Eye, FileText,
-  Bold, Italic, List, Heading2, Quote, Search, CheckCircle, CircleDashed, AlertTriangle, LogOut, Edit, EyeOff
+  Bold, Italic, List, Heading2, Quote, Search, CheckCircle, CircleDashed, AlertTriangle, LogOut, Edit, EyeOff, Sparkles, Zap
 } from 'lucide-react';
 
 interface AdminPanelProps {
@@ -305,7 +305,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
   }
 
   return (
-    <div className="max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500 mb-24 px-4 sm:px-6 lg:px-8">
+    <div className="max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500 mb-24 px-2 sm:px-4 md:px-6 lg:px-8">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 md:mb-8 gap-4">
         <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-ink">Editorial Desk</h2>
         <div className="flex flex-wrap items-center gap-2 sm:gap-4 w-full md:w-auto">
@@ -340,7 +340,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
       </div>
 
       {activeTab === 'create' ? (
-        <form onSubmit={(e) => handleSubmit(e)} className="space-y-6 sm:space-y-8 bg-white p-6 sm:p-8 md:p-10 lg:p-12 border border-zinc-100 shadow-xl relative">
+        <form onSubmit={(e) => handleSubmit(e)} className="space-y-6 sm:space-y-8 bg-white p-4 sm:p-6 md:p-8 lg:p-12 border border-zinc-100 shadow-xl relative">
 
           {/* Editing indicator */}
           {editingPostId && (
@@ -403,8 +403,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
             </div>
             <div>
               <label className="block font-mono text-xs uppercase tracking-widest text-zinc-400 mb-2">
-                Read Time <span className="text-green-600 hidden sm:inline">(Auto-calculated ✨)</span>
-                <span className="text-green-600 sm:hidden">(Auto ✨)</span>
+                Read Time
               </label>
               <input
                 type="text"
@@ -484,7 +483,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
           {/* Smart Tags System */}
           <div>
             <label className="block font-mono text-xs uppercase tracking-widest text-zinc-400 mb-2">
-              Tags <span className="text-blue-600">(Smart Suggestions ✨)</span>
+              Tags
             </label>
 
             {/* Selected Tags */}

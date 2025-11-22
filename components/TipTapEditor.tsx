@@ -6,7 +6,7 @@ import Image from '@tiptap/extension-image';
 import Placeholder from '@tiptap/extension-placeholder';
 import {
     Bold, Italic, Strikethrough, Code, Heading1, Heading2, List, ListOrdered,
-    Quote, Undo, Redo, Link as LinkIcon, Image as ImageIcon, Minus
+    Quote, Undo, Redo, Link as LinkIcon, Image as ImageIcon, Minus, Sparkles
 } from 'lucide-react';
 
 interface TipTapEditorProps {
@@ -224,8 +224,9 @@ export const TipTapEditor: React.FC<TipTapEditorProps> = ({ value, onChange, pla
             <EditorContent editor={editor} className="font-serif" />
 
             {/* Footer */}
-            <div className="border-t-2 border-zinc-200 bg-zinc-50 px-4 py-2 text-xs text-zinc-500 font-mono">
-                ✨ Professional rich text editor • Use toolbar or keyboard shortcuts
+            <div className="border-t-2 border-zinc-200 bg-zinc-50 px-4 py-2 text-xs text-zinc-500 font-mono flex items-center gap-2">
+                <Sparkles size={14} className="text-zinc-400" />
+                <span>Professional rich text editor - Use toolbar or keyboard shortcuts</span>
             </div>
         </div>
     );
