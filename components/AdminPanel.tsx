@@ -305,7 +305,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
   }
 
   return (
-    <div className="max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500 mb-24 px-2 sm:px-4 md:px-6 lg:px-8">
+    <div className="w-full md:max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500 mb-24 px-2 sm:px-3 md:px-6 lg:px-8">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 md:mb-8 gap-4">
         <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-ink">Editorial Desk</h2>
         <div className="flex flex-wrap items-center gap-2 sm:gap-4 w-full md:w-auto">
@@ -340,7 +340,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
       </div>
 
       {activeTab === 'create' ? (
-        <form onSubmit={(e) => handleSubmit(e)} className="space-y-6 sm:space-y-8 bg-white p-4 sm:p-6 md:p-8 lg:p-12 border border-zinc-100 shadow-xl relative">
+        <form onSubmit={(e) => handleSubmit(e)} className="space-y-4 sm:space-y-6 md:space-y-8 bg-white p-3 sm:p-5 md:p-8 lg:p-12 border border-zinc-100 shadow-xl relative">
 
           {/* Editing indicator */}
           {editingPostId && (

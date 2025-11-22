@@ -138,11 +138,12 @@ const App: React.FC = () => {
 
   const t = UI_TRANSLATIONS[language] || UI_TRANSLATIONS['en'];
 
-  // Get current language posts with safety check
+  // Get all posts regardless of language to ensure content is always visible
   const currentLanguagePosts = useMemo(() => {
     if (!allPosts || typeof allPosts !== 'object') return [];
-    return allPosts[language] || [];
-  }, [language, allPosts]);
+    // Flatten all posts from all languages into a single array
+    return Object.values(allPosts).flat();
+  }, [allPosts]);
 
   // Helper to check if a post is visible (published)
   const isVisible = (post: BlogPost) => post && post.status !== 'draft';
