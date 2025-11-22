@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { BlogPost } from '../types';
 import { storageService } from '../services/storage';
-import { RichTextEditor } from './RichTextEditor';
+import { TipTapEditor } from './TipTapEditor';
 import {
   Plus, Save, Database, Image as ImageIcon, X, Trash2, Eye, FileText,
   Bold, Italic, List, Heading2, Quote, Search, CheckCircle, CircleDashed, AlertTriangle, LogOut, Edit, EyeOff
@@ -470,14 +470,14 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
                 <div className="prose prose-lg max-w-none font-serif" dangerouslySetInnerHTML={{ __html: content }} />
               </div>
             ) : (
-              <RichTextEditor
+              <TipTapEditor
                 value={content}
                 onChange={setContent}
-                placeholder="Write your story here... Use the toolbar above to format your text."
+                placeholder="Start writing your story... Use the rich toolbar above for formatting."
               />
             )}
             <p className="mt-2 text-[10px] text-zinc-400 font-mono">
-              {showPreview ? 'Preview mode - Click \"Edit\" to continue editing' : 'Use the formatting toolbar or write HTML directly for advanced formatting.'}
+              {showPreview ? 'Preview mode - Click "Edit" to continue editing' : 'Professional WYSIWYG editor with full formatting support'}
             </p>
           </div>
 
