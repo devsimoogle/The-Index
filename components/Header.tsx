@@ -73,13 +73,13 @@ export const Header: React.FC<HeaderProps> = ({
         <div className={`flex items-center gap-6 md:gap-8 ${isMobileSearchOpen ? 'w-full md:w-auto' : ''}`}>
           {/* Search Bar */}
           {/* Search Bar */}
+          {/* Search Bar */}
           <div className={`relative flex items-center transition-all duration-500 ease-out ${isMobileSearchOpen ? 'w-full' : 'w-auto'}`}>
-            <div className={`relative flex items-center overflow-hidden transition-all duration-500 ${isMobileSearchOpen || searchQuery ? 'w-full md:w-64 border-b-2 border-black' : 'w-8 md:w-8 border-b border-transparent'}`}>
+            <div className={`relative flex items-center overflow-hidden transition-all duration-500 ${isMobileSearchOpen || searchQuery ? 'w-full md:w-72 bg-white/95 backdrop-blur-md shadow-2xl border border-zinc-200 rounded-full px-4 py-2' : 'w-8 md:w-8 border-b border-transparent'}`}>
               <button
                 onClick={() => {
                   if (!isMobileSearchOpen) {
                     setIsMobileSearchOpen(true);
-                    // Focus input manually if needed
                   }
                 }}
                 className={`shrink-0 text-ink transition-transform duration-300 ${isMobileSearchOpen ? 'scale-90' : 'hover:scale-110'}`}
@@ -94,20 +94,20 @@ export const Header: React.FC<HeaderProps> = ({
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => setIsMobileSearchOpen(true)}
                 onBlur={() => !searchQuery && setIsMobileSearchOpen(false)}
-                className={`bg-transparent outline-none text-sm font-sans ml-3 text-ink placeholder-zinc-400 w-full h-8 transition-opacity duration-300 ${isMobileSearchOpen ? 'opacity-100' : 'opacity-0 cursor-pointer'}`}
+                className={`bg-transparent outline-none text-sm font-sans ml-3 text-ink placeholder-zinc-400 w-full h-6 transition-opacity duration-300 ${isMobileSearchOpen ? 'opacity-100' : 'opacity-0 cursor-pointer'}`}
               />
 
               {/* Loading Indicator */}
-              <div className={`absolute right-0 top-1/2 -translate-y-1/2 transition-opacity duration-300 ${isSearching ? 'opacity-100' : 'opacity-0'}`}>
+              <div className={`absolute right-4 top-1/2 -translate-y-1/2 transition-opacity duration-300 ${isSearching ? 'opacity-100' : 'opacity-0'}`}>
                 <Loader2 size={14} className="animate-spin text-black" />
               </div>
             </div>
 
-            {/* Close Button (Mobile only usually, or if we want explicit close) */}
+            {/* Close Button */}
             {isMobileSearchOpen && (
               <button
                 onMouseDown={(e) => {
-                  e.preventDefault(); // Prevent blur
+                  e.preventDefault();
                   setIsMobileSearchOpen(false);
                   setSearchQuery('');
                 }}

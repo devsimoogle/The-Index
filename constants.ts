@@ -120,8 +120,144 @@ export const UI_TRANSLATIONS: Record<Language, Translations> = {
 };
 
 export const BLOG_POSTS: Record<Language, BlogPost[]> = {
-  en: [],
-  ig: [],
-  yo: [],
-  ha: []
+  en: [
+    {
+      id: '1',
+      title: 'The Digital Alexandria: Preserving the Web',
+      excerpt: 'As our lives move increasingly online, the challenge of archiving the internet becomes critical. How do we preserve the ephemeral nature of digital culture?',
+      content: '<p>The Library of Alexandria was a marvel of the ancient world, a repository of human knowledge that was tragically lost. Today, we face a similar challenge, but the scale is exponentially larger. The internet is the new Alexandria, but it is far more fragile.</p><p>Web archiving is the process of collecting portions of the World Wide Web to ensure the information is preserved in an archive for future researchers, historians, and the public. Organizations like the Internet Archive are leading this charge, but the task is Herculean.</p><h3>The Ephemeral Web</h3><p>The average lifespan of a webpage is approximately 100 days. Links rot, servers go down, and content is updated or deleted without a trace. This "digital dark age" threatens to erase our cultural heritage if we do not act.</p><p>Librarians and archivists are now digital custodians, developing new standards like WARC (Web ARChive) files to capture not just the text, but the look and feel of websites. It is a race against time, and a battle against the very nature of the medium.</p>',
+      author: 'Dr. Sarah Chen',
+      date: '2025-03-15T00:00:00.000Z',
+      readTime: '5 min',
+      tags: ['Archiving', 'Digital Preservation', 'History'],
+      status: 'published'
+    },
+    {
+      id: '2',
+      title: 'Algorithms of Oppression in Cataloging',
+      excerpt: 'Classification systems are not neutral. A look at how the Dewey Decimal System and Library of Congress Subject Headings perpetuate historical biases.',
+      content: '<p>Libraries are often seen as neutral spaces, but the systems we use to organize information are deeply political. The Dewey Decimal Classification (DDC) system, created in the 19th century, reflects the worldview of its creator: a white, Christian, American man.</p><p>For decades, topics related to LGBTQ+ issues, non-Christian religions, and indigenous cultures were marginalized or pathologized in these systems. For example, books on "homosexuality" were historically classified under "Abnormal Psychology" or "Social Problems".</p><h3>Decolonizing the Catalog</h3><p>Modern librarians are working to "decolonize" the catalog. This involves auditing collections, challenging outdated subject headings, and creating new, inclusive taxonomies. It is slow work, but essential for ensuring that all patrons feel seen and represented in the library.</p>',
+      author: 'Marcus Johnson',
+      date: '2025-03-10T00:00:00.000Z',
+      readTime: '4 min',
+      tags: ['Ethics', 'Cataloging', 'Social Justice'],
+      status: 'published'
+    },
+    {
+      id: '3',
+      title: 'The Quiet Revolution: AI in the Stacks',
+      excerpt: 'Artificial Intelligence is transforming how libraries operate, from predictive acquisition to personalized research assistants.',
+      content: '<p>The image of the librarian shushing patrons in dusty stacks is a relic of the past. Today\'s libraries are high-tech hubs, and Artificial Intelligence is the latest tool in the librarian\'s arsenal.</p><p>AI is being used to analyze circulation data to predict which books will be popular, allowing libraries to optimize their budgets. Chatbots (like our own Reference Desk AI) provide 24/7 assistance to patrons, answering questions about hours, events, and basic research.</p><h3>The Human Element</h3><p>Despite fears of automation, AI is not replacing librarians. Instead, it is freeing them from routine tasks so they can focus on what they do best: community engagement, complex research assistance, and information literacy instruction. The future library is a partnership between human expertise and machine efficiency.</p>',
+      author: 'Elena Rodriguez',
+      date: '2025-03-01T00:00:00.000Z',
+      readTime: '6 min',
+      tags: ['Technology', 'AI', 'Future of Libraries'],
+      status: 'published'
+    }
+  ],
+  ig: [
+    {
+      id: '1',
+      title: 'The Digital Alexandria: Preserving the Web',
+      excerpt: 'As our lives move increasingly online, the challenge of archiving the internet becomes critical. How do we preserve the ephemeral nature of digital culture?',
+      content: '<p>The Library of Alexandria was a marvel of the ancient world, a repository of human knowledge that was tragically lost. Today, we face a similar challenge, but the scale is exponentially larger. The internet is the new Alexandria, but it is far more fragile.</p><p>Web archiving is the process of collecting portions of the World Wide Web to ensure the information is preserved in an archive for future researchers, historians, and the public. Organizations like the Internet Archive are leading this charge, but the task is Herculean.</p><h3>The Ephemeral Web</h3><p>The average lifespan of a webpage is approximately 100 days. Links rot, servers go down, and content is updated or deleted without a trace. This "digital dark age" threatens to erase our cultural heritage if we do not act.</p><p>Librarians and archivists are now digital custodians, developing new standards like WARC (Web ARChive) files to capture not just the text, but the look and feel of websites. It is a race against time, and a battle against the very nature of the medium.</p>',
+      author: 'Dr. Sarah Chen',
+      date: '2025-03-15T00:00:00.000Z',
+      readTime: '5 min',
+      tags: ['Archiving', 'Digital Preservation', 'History'],
+      status: 'published'
+    },
+    {
+      id: '2',
+      title: 'Algorithms of Oppression in Cataloging',
+      excerpt: 'Classification systems are not neutral. A look at how the Dewey Decimal System and Library of Congress Subject Headings perpetuate historical biases.',
+      content: '<p>Libraries are often seen as neutral spaces, but the systems we use to organize information are deeply political. The Dewey Decimal Classification (DDC) system, created in the 19th century, reflects the worldview of its creator: a white, Christian, American man.</p><p>For decades, topics related to LGBTQ+ issues, non-Christian religions, and indigenous cultures were marginalized or pathologized in these systems. For example, books on "homosexuality" were historically classified under "Abnormal Psychology" or "Social Problems".</p><h3>Decolonizing the Catalog</h3><p>Modern librarians are working to "decolonize" the catalog. This involves auditing collections, challenging outdated subject headings, and creating new, inclusive taxonomies. It is slow work, but essential for ensuring that all patrons feel seen and represented in the library.</p>',
+      author: 'Marcus Johnson',
+      date: '2025-03-10T00:00:00.000Z',
+      readTime: '4 min',
+      tags: ['Ethics', 'Cataloging', 'Social Justice'],
+      status: 'published'
+    },
+    {
+      id: '3',
+      title: 'The Quiet Revolution: AI in the Stacks',
+      excerpt: 'Artificial Intelligence is transforming how libraries operate, from predictive acquisition to personalized research assistants.',
+      content: '<p>The image of the librarian shushing patrons in dusty stacks is a relic of the past. Today\'s libraries are high-tech hubs, and Artificial Intelligence is the latest tool in the librarian\'s arsenal.</p><p>AI is being used to analyze circulation data to predict which books will be popular, allowing libraries to optimize their budgets. Chatbots (like our own Reference Desk AI) provide 24/7 assistance to patrons, answering questions about hours, events, and basic research.</p><h3>The Human Element</h3><p>Despite fears of automation, AI is not replacing librarians. Instead, it is freeing them from routine tasks so they can focus on what they do best: community engagement, complex research assistance, and information literacy instruction. The future library is a partnership between human expertise and machine efficiency.</p>',
+      author: 'Elena Rodriguez',
+      date: '2025-03-01T00:00:00.000Z',
+      readTime: '6 min',
+      tags: ['Technology', 'AI', 'Future of Libraries'],
+      status: 'published'
+    }
+  ],
+  yo: [
+    {
+      id: '1',
+      title: 'The Digital Alexandria: Preserving the Web',
+      excerpt: 'As our lives move increasingly online, the challenge of archiving the internet becomes critical. How do we preserve the ephemeral nature of digital culture?',
+      content: '<p>The Library of Alexandria was a marvel of the ancient world, a repository of human knowledge that was tragically lost. Today, we face a similar challenge, but the scale is exponentially larger. The internet is the new Alexandria, but it is far more fragile.</p><p>Web archiving is the process of collecting portions of the World Wide Web to ensure the information is preserved in an archive for future researchers, historians, and the public. Organizations like the Internet Archive are leading this charge, but the task is Herculean.</p><h3>The Ephemeral Web</h3><p>The average lifespan of a webpage is approximately 100 days. Links rot, servers go down, and content is updated or deleted without a trace. This "digital dark age" threatens to erase our cultural heritage if we do not act.</p><p>Librarians and archivists are now digital custodians, developing new standards like WARC (Web ARChive) files to capture not just the text, but the look and feel of websites. It is a race against time, and a battle against the very nature of the medium.</p>',
+      author: 'Dr. Sarah Chen',
+      date: '2025-03-15T00:00:00.000Z',
+      readTime: '5 min',
+      tags: ['Archiving', 'Digital Preservation', 'History'],
+      status: 'published'
+    },
+    {
+      id: '2',
+      title: 'Algorithms of Oppression in Cataloging',
+      excerpt: 'Classification systems are not neutral. A look at how the Dewey Decimal System and Library of Congress Subject Headings perpetuate historical biases.',
+      content: '<p>Libraries are often seen as neutral spaces, but the systems we use to organize information are deeply political. The Dewey Decimal Classification (DDC) system, created in the 19th century, reflects the worldview of its creator: a white, Christian, American man.</p><p>For decades, topics related to LGBTQ+ issues, non-Christian religions, and indigenous cultures were marginalized or pathologized in these systems. For example, books on "homosexuality" were historically classified under "Abnormal Psychology" or "Social Problems".</p><h3>Decolonizing the Catalog</h3><p>Modern librarians are working to "decolonize" the catalog. This involves auditing collections, challenging outdated subject headings, and creating new, inclusive taxonomies. It is slow work, but essential for ensuring that all patrons feel seen and represented in the library.</p>',
+      author: 'Marcus Johnson',
+      date: '2025-03-10T00:00:00.000Z',
+      readTime: '4 min',
+      tags: ['Ethics', 'Cataloging', 'Social Justice'],
+      status: 'published'
+    },
+    {
+      id: '3',
+      title: 'The Quiet Revolution: AI in the Stacks',
+      excerpt: 'Artificial Intelligence is transforming how libraries operate, from predictive acquisition to personalized research assistants.',
+      content: '<p>The image of the librarian shushing patrons in dusty stacks is a relic of the past. Today\'s libraries are high-tech hubs, and Artificial Intelligence is the latest tool in the librarian\'s arsenal.</p><p>AI is being used to analyze circulation data to predict which books will be popular, allowing libraries to optimize their budgets. Chatbots (like our own Reference Desk AI) provide 24/7 assistance to patrons, answering questions about hours, events, and basic research.</p><h3>The Human Element</h3><p>Despite fears of automation, AI is not replacing librarians. Instead, it is freeing them from routine tasks so they can focus on what they do best: community engagement, complex research assistance, and information literacy instruction. The future library is a partnership between human expertise and machine efficiency.</p>',
+      author: 'Elena Rodriguez',
+      date: '2025-03-01T00:00:00.000Z',
+      readTime: '6 min',
+      tags: ['Technology', 'AI', 'Future of Libraries'],
+      status: 'published'
+    }
+  ],
+  ha: [
+    {
+      id: '1',
+      title: 'The Digital Alexandria: Preserving the Web',
+      excerpt: 'As our lives move increasingly online, the challenge of archiving the internet becomes critical. How do we preserve the ephemeral nature of digital culture?',
+      content: '<p>The Library of Alexandria was a marvel of the ancient world, a repository of human knowledge that was tragically lost. Today, we face a similar challenge, but the scale is exponentially larger. The internet is the new Alexandria, but it is far more fragile.</p><p>Web archiving is the process of collecting portions of the World Wide Web to ensure the information is preserved in an archive for future researchers, historians, and the public. Organizations like the Internet Archive are leading this charge, but the task is Herculean.</p><h3>The Ephemeral Web</h3><p>The average lifespan of a webpage is approximately 100 days. Links rot, servers go down, and content is updated or deleted without a trace. This "digital dark age" threatens to erase our cultural heritage if we do not act.</p><p>Librarians and archivists are now digital custodians, developing new standards like WARC (Web ARChive) files to capture not just the text, but the look and feel of websites. It is a race against time, and a battle against the very nature of the medium.</p>',
+      author: 'Dr. Sarah Chen',
+      date: '2025-03-15T00:00:00.000Z',
+      readTime: '5 min',
+      tags: ['Archiving', 'Digital Preservation', 'History'],
+      status: 'published'
+    },
+    {
+      id: '2',
+      title: 'Algorithms of Oppression in Cataloging',
+      excerpt: 'Classification systems are not neutral. A look at how the Dewey Decimal System and Library of Congress Subject Headings perpetuate historical biases.',
+      content: '<p>Libraries are often seen as neutral spaces, but the systems we use to organize information are deeply political. The Dewey Decimal Classification (DDC) system, created in the 19th century, reflects the worldview of its creator: a white, Christian, American man.</p><p>For decades, topics related to LGBTQ+ issues, non-Christian religions, and indigenous cultures were marginalized or pathologized in these systems. For example, books on "homosexuality" were historically classified under "Abnormal Psychology" or "Social Problems".</p><h3>Decolonizing the Catalog</h3><p>Modern librarians are working to "decolonize" the catalog. This involves auditing collections, challenging outdated subject headings, and creating new, inclusive taxonomies. It is slow work, but essential for ensuring that all patrons feel seen and represented in the library.</p>',
+      author: 'Marcus Johnson',
+      date: '2025-03-10T00:00:00.000Z',
+      readTime: '4 min',
+      tags: ['Ethics', 'Cataloging', 'Social Justice'],
+      status: 'published'
+    },
+    {
+      id: '3',
+      title: 'The Quiet Revolution: AI in the Stacks',
+      excerpt: 'Artificial Intelligence is transforming how libraries operate, from predictive acquisition to personalized research assistants.',
+      content: '<p>The image of the librarian shushing patrons in dusty stacks is a relic of the past. Today\'s libraries are high-tech hubs, and Artificial Intelligence is the latest tool in the librarian\'s arsenal.</p><p>AI is being used to analyze circulation data to predict which books will be popular, allowing libraries to optimize their budgets. Chatbots (like our own Reference Desk AI) provide 24/7 assistance to patrons, answering questions about hours, events, and basic research.</p><h3>The Human Element</h3><p>Despite fears of automation, AI is not replacing librarians. Instead, it is freeing them from routine tasks so they can focus on what they do best: community engagement, complex research assistance, and information literacy instruction. The future library is a partnership between human expertise and machine efficiency.</p>',
+      author: 'Elena Rodriguez',
+      date: '2025-03-01T00:00:00.000Z',
+      readTime: '6 min',
+      tags: ['Technology', 'AI', 'Future of Libraries'],
+      status: 'published'
+    }
+  ]
 };
