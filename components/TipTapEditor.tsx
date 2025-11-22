@@ -68,7 +68,7 @@ export const TipTapEditor: React.FC<TipTapEditorProps> = ({ value, onChange, pla
     };
 
     return (
-        <div className="border-2 border-zinc-200 rounded-lg overflow-hidden bg-white">
+        <div className="border-0 md:border-2 border-zinc-200 rounded-none md:rounded-lg overflow-hidden bg-white">
             {/* Toolbar */}
             <div className="border-b-2 border-zinc-200 bg-zinc-50 p-3 flex flex-wrap gap-1">
                 {/* Text Formatting */}
