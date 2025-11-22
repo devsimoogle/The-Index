@@ -1,4 +1,4 @@
-import { Language, Translations } from './types';
+import { Language, Translations, BlogPost } from './types';
 
 export const UI_TRANSLATIONS: Record<Language, Translations> = {
   en: {
@@ -117,4 +117,11 @@ export const UI_TRANSLATIONS: Record<Language, Translations> = {
     login: "Shiga",
     createPost: "Ƙirƙiri Sabon Rubutu",
   }
+};
+
+export const BLOG_POSTS: Record<Language, BlogPost[]> = {
+  en: [],
+  ig: [],
+  yo: [],
+  ha: []
 };
