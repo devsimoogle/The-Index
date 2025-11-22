@@ -59,7 +59,7 @@ export const LibrarianBot: React.FC = () => {
   return (
     <>
       {/* Toggle Button - High Z-index for mobile visibility */}
-      
+
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`fixed bottom-6 right-6 z-[100] group flex items-center gap-3 px-5 py-4 bg-black text-white shadow-2xl transition-all duration-500 hover:scale-105 hover:shadow-black/20 rounded-full ${isOpen ? 'rotate-90 opacity-0 pointer-events-none' : 'opacity-100'}`}
@@ -104,8 +104,8 @@ export const LibrarianBot: React.FC = () => {
             >
               <div
                 className={`max-w-[85%] p-4 text-sm leading-relaxed shadow-sm ${msg.role === 'user'
-                    ? 'bg-black text-white font-sans rounded-2xl rounded-tr-sm'
-                    : 'bg-zinc-50 text-zinc-800 border border-zinc-100 font-serif rounded-2xl rounded-tl-sm'
+                  ? 'bg-black text-white font-sans rounded-2xl rounded-tr-sm'
+                  : 'bg-zinc-50 text-zinc-800 border border-zinc-100 font-serif rounded-2xl rounded-tl-sm'
                   }`}
               >
                 {msg.text}
@@ -170,7 +170,7 @@ export const LibrarianBot: React.FC = () => {
             </button>
           </div>
           <div className="text-center mt-2">
-            <p className="text-[9px] text-zinc-300 font-mono uppercase tracking-widest">Powered by Gemini AI</p>
+            <p className="text-[9px] text-zinc-300 font-mono uppercase tracking-widest">Powered by ImoogleAI</p>
           </div>
         </div>
       </div>
