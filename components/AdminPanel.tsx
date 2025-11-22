@@ -212,9 +212,15 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
     // Reset form
     resetForm();
 
-    // Close modal
+    // Close modal and show success message
     setShowPublishModal(false);
     setPendingPublishStatus(null);
+
+    // Show success message
+    alert(editingPostId
+      ? `Post updated successfully as ${finalStatus}!`
+      : `Post ${finalStatus === 'published' ? 'published' : 'saved as draft'} successfully!`
+    );
   };
 
   const resetForm = () => {
@@ -253,6 +259,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
       onDeletePost(postToDelete);
       setShowDeleteModal(false);
       setPostToDelete(null);
+      alert('Post deleted successfully!');
     }
   };
 
@@ -670,15 +677,15 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
       {/* Delete Confirmation Modal */}
       {showDeleteModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-in fade-in duration-200">
-          <div className="bg-white p-8 max-w-md w-full mx-4 shadow-2xl animate-in zoom-in-95 duration-200">
+          <div className="bg-white p-8 max-w-md w-full mx-4 shadow-2xl animate-in zoom-in-95 duration-200 border-2 border-black">
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-3 bg-red-100 rounded-full">
-                <AlertTriangle size={24} className="text-red-600" />
+              <div className="p-3 bg-black rounded-full">
+                <AlertTriangle size={24} className="text-white" />
               </div>
-              <h3 className="font-serif text-2xl text-ink">Delete Post?</h3>
+              <h3 className="font-serif text-2xl text-black">Delete Post?</h3>
             </div>
 
-            <p className="text-zinc-600 mb-6 font-serif leading-relaxed">
+            <p className="text-zinc-700 mb-6 font-serif leading-relaxed">
               Are you sure you want to delete this post? This action cannot be undone.
               All comments and reactions associated with this post will also be removed.
             </p>
@@ -686,13 +693,13 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
             <div className="flex gap-3 justify-end">
               <button
                 onClick={cancelDelete}
-                className="px-6 py-2 border border-zinc-300 text-zinc-700 font-mono text-xs uppercase tracking-widest hover:bg-zinc-50 transition-colors"
+                className="px-6 py-2 border-2 border-black text-black font-mono text-xs uppercase tracking-widest hover:bg-zinc-100 transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={confirmDelete}
-                className="px-6 py-2 bg-red-600 text-white font-mono text-xs uppercase tracking-widest hover:bg-red-700 transition-colors flex items-center gap-2"
+                className="px-6 py-2 bg-black text-white font-mono text-xs uppercase tracking-widest hover:bg-zinc-800 transition-colors flex items-center gap-2"
               >
                 <Trash2 size={14} />
                 Delete Post
@@ -705,40 +712,40 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
       {/* Publish Confirmation Modal */}
       {showPublishModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-in fade-in duration-200">
-          <div className="bg-white p-8 max-w-md w-full mx-4 shadow-2xl animate-in zoom-in-95 duration-200">
+          <div className="bg-white p-8 max-w-md w-full mx-4 shadow-2xl animate-in zoom-in-95 duration-200 border-2 border-black">
             <div className="flex items-center gap-3 mb-4">
-              <div className={`p-3 rounded-full ${pendingPublishStatus === 'published' ? 'bg-green-100' : 'bg-amber-100'}`}>
+              <div className="p-3 rounded-full bg-black">
                 {pendingPublishStatus === 'published' ? (
-                  <CheckCircle size={24} className="text-green-600" />
+                  <CheckCircle size={24} className="text-white" />
                 ) : (
-                  <CircleDashed size={24} className="text-amber-600" />
+                  <CircleDashed size={24} className="text-white" />
                 )}
               </div>
-              <h3 className="font-serif text-2xl text-ink">
+              <h3 className="font-serif text-2xl text-black">
                 {editingPostId ? 'Update Post?' : (pendingPublishStatus === 'published' ? 'Publish Post?' : 'Save as Draft?')}
               </h3>
             </div>
 
-            <p className="text-zinc-600 mb-6 font-serif leading-relaxed">
+            <p className="text-zinc-700 mb-6 font-serif leading-relaxed">
               {pendingPublishStatus === 'published'
                 ? 'This post will be immediately visible to all readers. Make sure all content is ready for publication.'
                 : 'This post will be saved as a draft. You can edit and publish it later from the Manage Posts tab.'}
             </p>
 
-            <div className="bg-zinc-50 p-4 mb-6 border-l-4 border-zinc-300">
-              <p className="text-sm font-mono text-zinc-600">
+            <div className="bg-zinc-50 p-4 mb-6 border-l-4 border-black">
+              <p className="text-sm font-mono text-zinc-700">
                 <strong>Title:</strong> {title || 'Untitled'}
               </p>
-              <p className="text-sm font-mono text-zinc-600 mt-1">
+              <p className="text-sm font-mono text-zinc-700 mt-1">
                 <strong>Author:</strong> {author}
               </p>
-              <p className="text-sm font-mono text-zinc-600 mt-1">
+              <p className="text-sm font-mono text-zinc-700 mt-1">
                 <strong>Read Time:</strong> {readTime}
               </p>
-              <p className="text-sm font-mono text-zinc-600 mt-1">
+              <p className="text-sm font-mono text-zinc-700 mt-1">
                 <strong>Tags:</strong> {selectedTags.join(', ') || 'None'}
               </p>
-              <p className="text-sm font-mono text-zinc-600 mt-1">
+              <p className="text-sm font-mono text-zinc-700 mt-1">
                 <strong>Status:</strong> {pendingPublishStatus === 'published' ? 'Published' : 'Draft'}
               </p>
             </div>
@@ -746,16 +753,13 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
             <div className="flex gap-3 justify-end">
               <button
                 onClick={cancelPublish}
-                className="px-6 py-2 border border-zinc-300 text-zinc-700 font-mono text-xs uppercase tracking-widest hover:bg-zinc-50 transition-colors"
+                className="px-6 py-2 border-2 border-black text-black font-mono text-xs uppercase tracking-widest hover:bg-zinc-100 transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={confirmPublish}
-                className={`px-6 py-2 text-white font-mono text-xs uppercase tracking-widest transition-colors flex items-center gap-2 ${pendingPublishStatus === 'published'
-                  ? 'bg-green-600 hover:bg-green-700'
-                  : 'bg-amber-600 hover:bg-amber-700'
-                  }`}
+                className="px-6 py-2 bg-black text-white font-mono text-xs uppercase tracking-widest hover:bg-zinc-800 transition-colors flex items-center gap-2"
               >
                 <Save size={14} />
                 {editingPostId ? 'Update Now' : (pendingPublishStatus === 'published' ? 'Publish Now' : 'Save Draft')}
