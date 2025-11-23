@@ -367,28 +367,28 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-8 border-b border-zinc-200 mb-10">
+      <div className="flex gap-4 lg:gap-8 border-b border-zinc-200 mb-6 lg:mb-10 overflow-x-auto scrollbar-hide -mx-4 px-4 lg:mx-0 lg:px-0">
         <button
           onClick={() => { setActiveTab('create'); resetForm(); }}
-          className={`pb-3 font-mono text-xs uppercase tracking-widest transition-colors flex items-center gap-2 ${activeTab === 'create' ? 'border-b-2 border-ink text-ink' : 'text-zinc-400 hover:text-zinc-600'}`}
+          className={`pb-3 font-mono text-[10px] lg:text-xs uppercase tracking-widest transition-colors flex items-center gap-1.5 lg:gap-2 whitespace-nowrap ${activeTab === 'create' ? 'border-b-2 border-ink text-ink' : 'text-zinc-400 hover:text-zinc-600'}`}
         >
           <Plus size={14} /> {editingPostId ? 'Edit Post' : 'Create New'}
         </button>
         <button
           onClick={() => setActiveTab('manage')}
-          className={`pb-3 font-mono text-xs uppercase tracking-widest transition-colors flex items-center gap-2 ${activeTab === 'manage' ? 'border-b-2 border-ink text-ink' : 'text-zinc-400 hover:text-zinc-600'}`}
+          className={`pb-3 font-mono text-[10px] lg:text-xs uppercase tracking-widest transition-colors flex items-center gap-1.5 lg:gap-2 whitespace-nowrap ${activeTab === 'manage' ? 'border-b-2 border-ink text-ink' : 'text-zinc-400 hover:text-zinc-600'}`}
         >
           <FileText size={14} /> Manage Posts
         </button>
         <button
           onClick={() => setActiveTab('appearance')}
-          className={`pb-3 font-mono text-xs uppercase tracking-widest transition-colors flex items-center gap-2 ${activeTab === 'appearance' ? 'border-b-2 border-ink text-ink' : 'text-zinc-400 hover:text-zinc-600'}`}
+          className={`pb-3 font-mono text-[10px] lg:text-xs uppercase tracking-widest transition-colors flex items-center gap-1.5 lg:gap-2 whitespace-nowrap ${activeTab === 'appearance' ? 'border-b-2 border-ink text-ink' : 'text-zinc-400 hover:text-zinc-600'}`}
         >
           <Palette size={14} /> Appearance
         </button>
         <button
           onClick={() => setActiveTab('templates')}
-          className={`pb-3 font-mono text-xs uppercase tracking-widest transition-colors flex items-center gap-2 ${activeTab === 'templates' ? 'border-b-2 border-ink text-ink' : 'text-zinc-400 hover:text-zinc-600'}`}
+          className={`pb-3 font-mono text-[10px] lg:text-xs uppercase tracking-widest transition-colors flex items-center gap-1.5 lg:gap-2 whitespace-nowrap ${activeTab === 'templates' ? 'border-b-2 border-ink text-ink' : 'text-zinc-400 hover:text-zinc-600'}`}
         >
           <LayoutIcon size={14} /> Templates
         </button>
@@ -906,7 +906,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
               <p className="font-mono text-xs text-zinc-400 uppercase tracking-widest">Professional designs ready to use</p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 mb-10 lg:mb-12">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 mb-10 lg:mb-12 overflow-x-auto whitespace-nowrap">
               {PREMADE_TEMPLATES.map(template => {
                 const IconComponent = template.previewIcon === 'BookOpen' ? BookOpen :
                   template.previewIcon === 'Sparkles' ? Sparkles : Zap;
