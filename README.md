@@ -258,4 +258,4 @@ For issues and questions:
 
 **Made with ❤️ By Olajuwon**
 
-*Exploring the future of library science, one post at a time.*
+*Exploring the future of library science.*
