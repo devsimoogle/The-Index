@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { LayoutTemplate, ThemeScale, BorderRadius } from '../types/theme';
+import { PREMADE_TEMPLATES } from '../constants/templates';
 
 interface AdminPanelProps {
   posts: BlogPost[];
@@ -17,7 +18,7 @@ interface AdminPanelProps {
   onDeletePost: (postId: string) => void;
 }
 
-type Tab = 'create' | 'manage' | 'appearance';
+type Tab = 'create' | 'manage' | 'appearance' | 'templates';
 type PostStatus = 'published' | 'draft';
 
 // Utility function to calculate read time
@@ -292,47 +293,44 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
 
   if (!isAuthenticated) {
     return (
-      <div className="fixed inset-0 z-50 bg-white flex items-center justify-center relative overflow-hidden px-4">
-        {/* Background Elements */}
-        <div className="absolute inset-0 bg-gradient-to-br from-zinc-50 to-zinc-200 -z-20" />
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 opacity-30">
-          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-200 rounded-full blur-[100px] animate-pulse" />
-          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-200 rounded-full blur-[100px] animate-pulse delay-1000" />
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-zinc-50 to-zinc-100 px-4">
+        {/* Decorative Elements */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-20 pointer-events-none">
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-200 rounded-full blur-[120px] animate-pulse" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-200 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
         </div>
 
-        <div className="w-full max-w-md">
-          <div className="bg-white/70 backdrop-blur-xl border border-white/50 shadow-lg rounded-2xl p-6 md:p-12 relative overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+        <div className="w-full max-w-md relative z-10">
+          <div className="bg-white/80 backdrop-blur-sm border border-zinc-200 shadow-lg p-6 lg:p-12">
 
-            <div className="text-center mb-8 md:mb-10 relative z-10">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-black text-white mb-6 shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+            <div className="text-center mb-8 lg:mb-10">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-black text-white mb-6 shadow-md transform hover:scale-110 transition-transform duration-300">
                 <BookOpen size={24} />
               </div>
-              <h2 className="font-serif text-3xl md:text-4xl text-zinc-900 mb-3 tracking-tight">Welcome Back</h2>
+              <h2 className="font-serif text-3xl lg:text-4xl text-zinc-900 mb-3 tracking-tight">Welcome Back</h2>
               <p className="text-zinc-500 font-sans text-sm">Enter your credentials to access the editorial desk.</p>
             </div>
 
-            <form onSubmit={handleLogin} className="space-y-6 relative z-10">
+            <form onSubmit={handleLogin} className="space-y-6">
               <div className="space-y-2">
                 <label className="text-xs font-mono uppercase tracking-widest text-zinc-500 ml-1">Password</label>
-                <div className="relative group/input">
+                <div className="relative">
                   <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter access code..."
-                    className="w-full px-4 py-3 bg-white/50 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-black transition-all duration-300 placeholder:text-zinc-300 font-mono text-sm"
+                    className="w-full px-4 py-3 bg-white border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black transition-all duration-300 placeholder:text-zinc-300 font-mono text-sm"
                   />
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover/input:opacity-100 pointer-events-none transition-opacity duration-300" />
                 </div>
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-black text-white py-4 rounded-xl font-mono text-xs uppercase tracking-widest hover:bg-zinc-800 transform active:scale-[0.98] transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 group/btn"
+                className="w-full bg-black text-white py-4 font-mono text-xs uppercase tracking-widest hover:bg-zinc-800 transform active:scale-[0.98] transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2"
               >
                 <span>Access Dashboard</span>
-                <Zap size={14} className="group-hover/btn:fill-white transition-colors" />
+                <Zap size={14} className="fill-white" />
               </button>
             </form>
 
@@ -385,6 +383,12 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
           className={`pb-3 font-mono text-xs uppercase tracking-widest transition-colors flex items-center gap-2 ${activeTab === 'appearance' ? 'border-b-2 border-ink text-ink' : 'text-zinc-400 hover:text-zinc-600'}`}
         >
           <Palette size={14} /> Appearance
+        </button>
+        <button
+          onClick={() => setActiveTab('templates')}
+          className={`pb-3 font-mono text-xs uppercase tracking-widest transition-colors flex items-center gap-2 ${activeTab === 'templates' ? 'border-b-2 border-ink text-ink' : 'text-zinc-400 hover:text-zinc-600'}`}
+        >
+          <LayoutIcon size={14} /> Templates
         </button>
       </div>
 
@@ -714,35 +718,35 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
               <p className="font-mono text-xs text-zinc-400 uppercase tracking-widest">Customize the journal's aesthetic</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 mb-12">
               {availableThemes.map(theme => (
                 <button
                   key={theme.id}
                   onClick={() => setTheme(theme.id)}
-                  className={`group relative p-6 border-2 text-left transition-all duration-300 ${currentTheme.id === theme.id ? 'border-ink ring-1 ring-ink' : 'border-zinc-100 hover:border-zinc-300'}`}
+                  className={`group relative p-4 lg:p-6 border text-left transition-all duration-300 ${currentTheme.id === theme.id ? 'border-ink ring-1 ring-ink shadow-md' : 'border-zinc-200 hover:border-zinc-300 shadow-sm'}`}
                 >
-                  <div className="flex justify-between items-start mb-4">
-                    <span className={`font-serif text-xl ${currentTheme.id === theme.id ? 'text-ink' : 'text-zinc-600'}`}>{theme.name}</span>
-                    {currentTheme.id === theme.id && <CheckCircle size={18} className="text-ink" />}
+                  <div className="flex justify-between items-start mb-3 lg:mb-4">
+                    <span className={`font-serif text-lg lg:text-xl ${currentTheme.id === theme.id ? 'text-ink' : 'text-zinc-600'}`}>{theme.name}</span>
+                    {currentTheme.id === theme.id && <CheckCircle size={16} className="text-ink flex-shrink-0 ml-2" />}
                   </div>
 
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 rounded-full border border-zinc-200" style={{ backgroundColor: theme.colors.paper }}></div>
-                      <span className="text-xs font-mono text-zinc-400 uppercase">Paper</span>
+                  <div className="space-y-1.5 lg:space-y-2">
+                    <div className="flex items-center gap-2 lg:gap-3">
+                      <div className="w-5 h-5 lg:w-6 lg:h-6 rounded-full border border-zinc-200 flex-shrink-0" style={{ backgroundColor: theme.colors.paper }}></div>
+                      <span className="text-[10px] lg:text-xs font-mono text-zinc-400 uppercase">Paper</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 rounded-full border border-zinc-200" style={{ backgroundColor: theme.colors.ink }}></div>
-                      <span className="text-xs font-mono text-zinc-400 uppercase">Ink</span>
+                    <div className="flex items-center gap-2 lg:gap-3">
+                      <div className="w-5 h-5 lg:w-6 lg:h-6 rounded-full border border-zinc-200 flex-shrink-0" style={{ backgroundColor: theme.colors.ink }}></div>
+                      <span className="text-[10px] lg:text-xs font-mono text-zinc-400 uppercase">Ink</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 rounded-full border border-zinc-200" style={{ backgroundColor: theme.colors.accent }}></div>
-                      <span className="text-xs font-mono text-zinc-400 uppercase">Accent</span>
+                    <div className="flex items-center gap-2 lg:gap-3">
+                      <div className="w-5 h-5 lg:w-6 lg:h-6 rounded-full border border-zinc-200 flex-shrink-0" style={{ backgroundColor: theme.colors.accent }}></div>
+                      <span className="text-[10px] lg:text-xs font-mono text-zinc-400 uppercase">Accent</span>
                     </div>
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-zinc-100">
-                    <p className="font-serif text-sm opacity-70" style={{ color: theme.colors.ink }}>
+                  <div className="mt-4 lg:mt-6 pt-3 lg:pt-4 border-t border-zinc-100">
+                    <p className="font-serif text-xs lg:text-sm opacity-70" style={{ color: theme.colors.ink }}>
                       "The library is a growing organism."
                     </p>
                   </div>
@@ -750,21 +754,21 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
               ))}
             </div>
 
-            <div className="bg-zinc-50 p-8 border border-zinc-200 rounded-lg space-y-8">
+            <div className="bg-zinc-50 p-4 lg:p-8 border border-zinc-200 rounded-lg space-y-6 lg:space-y-8">
 
               {/* Layout Section */}
               <div>
-                <h4 className="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-4 flex items-center gap-2">
+                <h4 className="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-3 lg:mb-4 flex items-center gap-2">
                   <LayoutIcon size={14} /> Layout Structure
                 </h4>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-4">
                   {(['classic', 'grid', 'magazine', 'minimal'] as LayoutTemplate[]).map(layout => (
                     <button
                       key={layout}
                       onClick={() => updateThemeLayout(layout)}
-                      className={`p-4 border text-center transition-all ${currentTheme.layout === layout ? 'bg-white border-ink shadow-sm' : 'border-zinc-200 hover:border-zinc-300'}`}
+                      className={`p-3 lg:p-4 border text-center transition-all ${currentTheme.layout === layout ? 'bg-white border-ink shadow-sm' : 'border-zinc-200 hover:border-zinc-300'}`}
                     >
-                      <span className="capitalize font-serif text-lg">{layout}</span>
+                      <span className="capitalize font-serif text-sm lg:text-lg">{layout}</span>
                     </button>
                   ))}
                 </div>
@@ -772,16 +776,16 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
 
               {/* Typography Section */}
               <div>
-                <h4 className="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-4 flex items-center gap-2">
+                <h4 className="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-3 lg:mb-4 flex items-center gap-2">
                   <Type size={14} /> Typography
                 </h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 gap-4 lg:gap-6">
                   <div>
                     <label className="block text-xs font-mono text-zinc-400 mb-2">Serif (Headings)</label>
                     <select
                       value={currentTheme.fonts.serif}
                       onChange={(e) => updateThemeFonts({ serif: e.target.value })}
-                      className="w-full p-2 bg-white border border-zinc-200 text-sm font-serif focus:border-ink focus:outline-none"
+                      className="w-full p-2.5 lg:p-2 bg-white border border-zinc-200 text-sm font-serif focus:border-ink focus:outline-none"
                     >
                       <option value='"Cormorant Garamond"'>Cormorant Garamond</option>
                       <option value='"Merriweather"'>Merriweather</option>
@@ -794,7 +798,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
                     <select
                       value={currentTheme.fonts.sans}
                       onChange={(e) => updateThemeFonts({ sans: e.target.value })}
-                      className="w-full p-2 bg-white border border-zinc-200 text-sm font-sans focus:border-ink focus:outline-none"
+                      className="w-full p-2.5 lg:p-2 bg-white border border-zinc-200 text-sm font-sans focus:border-ink focus:outline-none"
                     >
                       <option value='"Inter"'>Inter</option>
                       <option value='"Roboto"'>Roboto</option>
@@ -807,7 +811,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
                     <select
                       value={currentTheme.fonts.mono}
                       onChange={(e) => updateThemeFonts({ mono: e.target.value })}
-                      className="w-full p-2 bg-white border border-zinc-200 text-sm font-mono focus:border-ink focus:outline-none"
+                      className="w-full p-2.5 lg:p-2 bg-white border border-zinc-200 text-sm font-mono focus:border-ink focus:outline-none"
                     >
                       <option value='"JetBrains Mono"'>JetBrains Mono</option>
                       <option value='"Fira Code"'>Fira Code</option>
@@ -818,17 +822,17 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
               </div>
 
               {/* Scale & Radius Section */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 gap-6 lg:gap-8">
                 <div>
-                  <h4 className="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-4 flex items-center gap-2">
+                  <h4 className="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-3 lg:mb-4 flex items-center gap-2">
                     <Maximize size={14} /> Scale
                   </h4>
-                  <div className="flex gap-2">
+                  <div className="grid grid-cols-5 gap-1.5 lg:gap-2">
                     {(['0.9', '0.95', '1', '1.05', '1.1'] as const).map(scale => (
                       <button
                         key={scale}
                         onClick={() => updateThemeScale(parseFloat(scale) as ThemeScale)}
-                        className={`flex-1 py-2 border text-xs font-mono transition-all ${currentTheme.scale === parseFloat(scale) ? 'bg-ink text-white border-ink' : 'bg-white border-zinc-200 hover:border-zinc-300'}`}
+                        className={`py-2.5 lg:py-2 border text-[10px] lg:text-xs font-mono transition-all ${currentTheme.scale === parseFloat(scale) ? 'bg-ink text-white border-ink' : 'bg-white border-zinc-200 hover:border-zinc-300'}`}
                       >
                         {parseFloat(scale) * 100}%
                       </button>
@@ -836,15 +840,15 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
                   </div>
                 </div>
                 <div>
-                  <h4 className="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-4 flex items-center gap-2">
+                  <h4 className="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-3 lg:mb-4 flex items-center gap-2">
                     <Square size={14} /> Border Radius
                   </h4>
-                  <div className="flex gap-2">
+                  <div className="grid grid-cols-5 gap-1.5 lg:gap-2">
                     {(['none', 'sm', 'md', 'lg', 'full'] as BorderRadius[]).map(radius => (
                       <button
                         key={radius}
                         onClick={() => updateThemeRadius(radius)}
-                        className={`flex-1 py-2 border text-xs font-mono capitalize transition-all ${currentTheme.borderRadius === radius ? 'bg-ink text-white border-ink' : 'bg-white border-zinc-200 hover:border-zinc-300'}`}
+                        className={`py-2.5 lg:py-2 border text-[10px] lg:text-xs font-mono capitalize transition-all ${currentTheme.borderRadius === radius ? 'bg-ink text-white border-ink' : 'bg-white border-zinc-200 hover:border-zinc-300'}`}
                       >
                         {radius}
                       </button>
@@ -855,10 +859,10 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
 
               {/* Colors Section */}
               <div>
-                <h4 className="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-4 flex items-center gap-2">
+                <h4 className="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-3 lg:mb-4 flex items-center gap-2">
                   <Palette size={14} /> Color Palette
                 </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 gap-4 lg:gap-6">
                   <div>
                     <label className="block text-xs font-mono text-zinc-400 mb-2">Accent Color</label>
                     <div className="flex items-center gap-3">
@@ -866,7 +870,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
                         type="color"
                         value={currentTheme.colors.accent}
                         onChange={(e) => updateThemeColors({ accent: e.target.value })}
-                        className="w-10 h-10 rounded cursor-pointer border-0 p-0"
+                        className="w-12 h-12 lg:w-10 lg:h-10 rounded cursor-pointer border-0 p-0"
                       />
                       <span className="font-mono text-sm text-zinc-600">{currentTheme.colors.accent}</span>
                     </div>
@@ -878,7 +882,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
                         type="color"
                         value={currentTheme.colors.ink}
                         onChange={(e) => updateThemeColors({ ink: e.target.value })}
-                        className="w-10 h-10 rounded cursor-pointer border-0 p-0"
+                        className="w-12 h-12 lg:w-10 lg:h-10 rounded cursor-pointer border-0 p-0"
                       />
                       <span className="font-mono text-sm text-zinc-600">{currentTheme.colors.ink}</span>
                     </div>
@@ -889,7 +893,85 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
             </div>
           </div>
         </div>
-      )}
+      ) : activeTab === 'templates' ? (
+      /* Templates Tab */
+      <div className="bg-white border border-zinc-100 shadow-xl p-4 lg:p-8">
+        <div className="max-w-5xl mx-auto">
+          <div className="mb-8 lg:mb-10 text-center">
+            <h3 className="font-serif text-2xl lg:text-3xl text-ink mb-3 lg:mb-4">Pre-made Templates</h3>
+            <p className="font-mono text-xs text-zinc-400 uppercase tracking-widest">Professional designs ready to use</p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 mb-10 lg:mb-12">
+            {PREMADE_TEMPLATES.map(template => {
+              const IconComponent = template.previewIcon === 'BookOpen' ? BookOpen :
+                template.previewIcon === 'Sparkles' ? Sparkles : Zap;
+              return (
+                <div
+                  key={template.id}
+                  className="group border border-zinc-200 hover:border-ink transition-all duration-300 overflow-hidden"
+                >
+                  <div
+                    className="h-32 lg:h-40 flex items-center justify-center"
+                    style={{ backgroundColor: template.theme.colors.mist }}
+                  >
+                    <IconComponent size={48} style={{ color: template.theme.colors.accent }} />
+                  </div>
+
+                  <div className="p-4 lg:p-6">
+                    <h4 className="font-serif text-lg lg:text-xl text-ink mb-2">{template.name}</h4>
+                    <p className="text-xs lg:text-sm text-zinc-500 mb-4 line-clamp-2">{template.description}</p>
+
+                    <div className="flex gap-1.5 mb-4">
+                      <div className="w-6 h-6 rounded-full border border-zinc-200" style={{ backgroundColor: template.theme.colors.paper }}></div>
+                      <div className="w-6 h-6 rounded-full border border-zinc-200" style={{ backgroundColor: template.theme.colors.ink }}></div>
+                      <div className="w-6 h-6 rounded-full border border-zinc-200" style={{ backgroundColor: template.theme.colors.accent }}></div>
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        const { theme } = template;
+                        updateThemeLayout(theme.layout);
+                        updateThemeColors(theme.colors);
+                        updateThemeFonts(theme.fonts);
+                        updateThemeRadius(theme.borderRadius);
+                        updateThemeScale(theme.scale as ThemeScale);
+                      }}
+                      className="w-full bg-ink text-white py-2.5 lg:py-2 text-xs font-mono uppercase tracking-widest hover:bg-zinc-800 transition-colors"
+                    >
+                      Apply Template
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="bg-zinc-50 border border-zinc-200 p-4 lg:p-6 rounded-lg">
+            <h4 className="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-3 flex items-center gap-2">
+              <Type size={14} /> Template Editor
+            </h4>
+            <p className="text-sm text-zinc-600 mb-4">
+              After applying a template, you can further customize it in the <strong>Appearance</strong> tab. All changes are saved automatically.
+            </p>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 text-xs">
+              <div className="flex items-start gap-2">
+                <CheckCircle size={14} className="text-green-600 flex-shrink-0 mt-0.5" />
+                <span className="text-zinc-600">Instant preview</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <CheckCircle size={14} className="text-green-600 flex-shrink-0 mt-0.5" />
+                <span className="text-zinc-600">Full customization</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <CheckCircle size={14} className="text-green-600 flex-shrink-0 mt-0.5" />
+                <span className="text-zinc-600">Auto-save enabled</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      ) : null}
 
       {/* Delete Confirmation Modal */}
       {showDeleteModal && (
