@@ -293,7 +293,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
 
   if (!isAuthenticated) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-zinc-50 to-zinc-100 px-4">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-zinc-50 to-zinc-100 px-4 overflow-hidden">
         {/* Decorative Elements */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-20 pointer-events-none">
           <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-200 rounded-full blur-[120px] animate-pulse" />
@@ -301,17 +301,17 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
         </div>
 
         <div className="w-full max-w-md relative z-10">
-          <div className="bg-white/80 backdrop-blur-sm border border-zinc-200 shadow-lg p-6 lg:p-12">
+          <div className="bg-white/80 backdrop-blur-sm border border-zinc-200 shadow-lg p-6 lg:p-10">
 
-            <div className="text-center mb-8 lg:mb-10">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-black text-white mb-6 shadow-md transform hover:scale-110 transition-transform duration-300">
-                <BookOpen size={24} />
+            <div className="text-center mb-6 lg:mb-8">
+              <div className="inline-flex items-center justify-center w-14 h-14 lg:w-16 lg:h-16 rounded-full bg-black text-white mb-4 lg:mb-6 shadow-md transform hover:scale-110 transition-transform duration-300">
+                <BookOpen size={20} className="lg:w-6 lg:h-6" />
               </div>
-              <h2 className="font-serif text-3xl lg:text-4xl text-zinc-900 mb-3 tracking-tight">Welcome Back</h2>
-              <p className="text-zinc-500 font-sans text-sm">Enter your credentials to access the editorial desk.</p>
+              <h2 className="font-serif text-2xl lg:text-3xl text-zinc-900 mb-2 lg:mb-3 tracking-tight">Welcome Back</h2>
+              <p className="text-zinc-500 font-sans text-xs lg:text-sm">Enter your credentials to access the editorial desk.</p>
             </div>
 
-            <form onSubmit={handleLogin} className="space-y-6">
+            <form onSubmit={handleLogin} className="space-y-5 lg:space-y-6">
               <div className="space-y-2">
                 <label className="text-xs font-mono uppercase tracking-widest text-zinc-500 ml-1">Password</label>
                 <div className="relative">
@@ -320,21 +320,21 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter access code..."
-                    className="w-full px-4 py-3 bg-white border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black transition-all duration-300 placeholder:text-zinc-300 font-mono text-sm"
+                    className="w-full px-4 py-2.5 lg:py-3 bg-white border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black transition-all duration-300 placeholder:text-zinc-300 font-mono text-sm"
                   />
                 </div>
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-black text-white py-4 font-mono text-xs uppercase tracking-widest hover:bg-zinc-800 transform active:scale-[0.98] transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                className="w-full bg-black text-white py-3 lg:py-4 font-mono text-xs uppercase tracking-widest hover:bg-zinc-800 transform active:scale-[0.98] transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2"
               >
                 <span>Access Dashboard</span>
                 <Zap size={14} className="fill-white" />
               </button>
             </form>
 
-            <div className="mt-8 text-center">
+            <div className="mt-6 lg:mt-8 text-center">
               <p className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">
                 Secure System • The Index
               </p>
@@ -894,7 +894,6 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
           </div>
         </div>
       ) : activeTab === 'templates' ? (
-      /* Templates Tab */
       <div className="bg-white border border-zinc-100 shadow-xl p-4 lg:p-8">
         <div className="max-w-5xl mx-auto">
           <div className="mb-8 lg:mb-10 text-center">
