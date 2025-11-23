@@ -5,9 +5,11 @@ import { storageService } from '../services/storage';
 import { TipTapEditor } from './TipTapEditor';
 import {
   Plus, Save, Database, Image as ImageIcon, X, Trash2, Eye, FileText,
-  Bold, Italic, List, Heading2, Quote, Search, CheckCircle, CircleDashed, AlertTriangle, LogOut, Edit, EyeOff, Sparkles, Zap, BookOpen, Palette
+  Bold, Italic, List, Heading2, Quote, Search, CheckCircle, CircleDashed, AlertTriangle, LogOut, Edit, EyeOff, Sparkles, Zap, BookOpen, Palette,
+  Layout as LayoutIcon, Type, Maximize, Minimize, Square
 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
+import { LayoutTemplate, ThemeScale, BorderRadius } from '../types/theme';
 
 interface AdminPanelProps {
   posts: BlogPost[];
@@ -28,7 +30,10 @@ const calculateReadTime = (content: string): string => {
 };
 
 export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDeletePost }) => {
-  const { currentTheme, setTheme, updateThemeColors, availableThemes } = useTheme();
+  const {
+    currentTheme, setTheme, updateThemeColors, availableThemes,
+    updateThemeLayout, updateThemeFonts, updateThemeScale, updateThemeRadius
+  } = useTheme();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [activeTab, setActiveTab] = useState<Tab>('create');
@@ -287,7 +292,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-[80vh] flex items-center justify-center relative overflow-hidden px-4">
+      <div className="fixed inset-0 z-50 bg-white flex items-center justify-center relative overflow-hidden px-4">
         {/* Background Elements */}
         <div className="absolute inset-0 bg-gradient-to-br from-zinc-50 to-zinc-200 -z-20" />
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 opacity-30">
@@ -745,34 +750,142 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
               ))}
             </div>
 
-            <div className="bg-zinc-50 p-8 border border-zinc-200 rounded-lg">
-              <h4 className="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-6">Fine Tuning</h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-xs font-mono text-zinc-400 mb-2">Accent Color</label>
-                  <div className="flex items-center gap-3">
-                    <input
-                      type="color"
-                      value={currentTheme.colors.accent}
-                      onChange={(e) => updateThemeColors({ accent: e.target.value })}
-                      className="w-10 h-10 rounded cursor-pointer border-0 p-0"
-                    />
-                    <span className="font-mono text-sm text-zinc-600">{currentTheme.colors.accent}</span>
-                  </div>
+            <div className="bg-zinc-50 p-8 border border-zinc-200 rounded-lg space-y-8">
+
+              {/* Layout Section */}
+              <div>
+                <h4 className="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-4 flex items-center gap-2">
+                  <LayoutIcon size={14} /> Layout Structure
+                </h4>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {(['classic', 'grid', 'magazine', 'minimal'] as LayoutTemplate[]).map(layout => (
+                    <button
+                      key={layout}
+                      onClick={() => updateThemeLayout(layout)}
+                      className={`p-4 border text-center transition-all ${currentTheme.layout === layout ? 'bg-white border-ink shadow-sm' : 'border-zinc-200 hover:border-zinc-300'}`}
+                    >
+                      <span className="capitalize font-serif text-lg">{layout}</span>
+                    </button>
+                  ))}
                 </div>
-                <div>
-                  <label className="block text-xs font-mono text-zinc-400 mb-2">Ink Color</label>
-                  <div className="flex items-center gap-3">
-                    <input
-                      type="color"
-                      value={currentTheme.colors.ink}
-                      onChange={(e) => updateThemeColors({ ink: e.target.value })}
-                      className="w-10 h-10 rounded cursor-pointer border-0 p-0"
-                    />
-                    <span className="font-mono text-sm text-zinc-600">{currentTheme.colors.ink}</span>
+              </div>
+
+              {/* Typography Section */}
+              <div>
+                <h4 className="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-4 flex items-center gap-2">
+                  <Type size={14} /> Typography
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div>
+                    <label className="block text-xs font-mono text-zinc-400 mb-2">Serif (Headings)</label>
+                    <select
+                      value={currentTheme.fonts.serif}
+                      onChange={(e) => updateThemeFonts({ serif: e.target.value })}
+                      className="w-full p-2 bg-white border border-zinc-200 text-sm font-serif focus:border-ink focus:outline-none"
+                    >
+                      <option value='"Cormorant Garamond"'>Cormorant Garamond</option>
+                      <option value='"Merriweather"'>Merriweather</option>
+                      <option value='"Lora"'>Lora</option>
+                      <option value='"Playfair Display"'>Playfair Display</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-mono text-zinc-400 mb-2">Sans (Body)</label>
+                    <select
+                      value={currentTheme.fonts.sans}
+                      onChange={(e) => updateThemeFonts({ sans: e.target.value })}
+                      className="w-full p-2 bg-white border border-zinc-200 text-sm font-sans focus:border-ink focus:outline-none"
+                    >
+                      <option value='"Inter"'>Inter</option>
+                      <option value='"Roboto"'>Roboto</option>
+                      <option value='"Open Sans"'>Open Sans</option>
+                      <option value='"Space Mono"'>Space Mono</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-mono text-zinc-400 mb-2">Mono (UI)</label>
+                    <select
+                      value={currentTheme.fonts.mono}
+                      onChange={(e) => updateThemeFonts({ mono: e.target.value })}
+                      className="w-full p-2 bg-white border border-zinc-200 text-sm font-mono focus:border-ink focus:outline-none"
+                    >
+                      <option value='"JetBrains Mono"'>JetBrains Mono</option>
+                      <option value='"Fira Code"'>Fira Code</option>
+                      <option value='"Space Mono"'>Space Mono</option>
+                    </select>
                   </div>
                 </div>
               </div>
+
+              {/* Scale & Radius Section */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <h4 className="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-4 flex items-center gap-2">
+                    <Maximize size={14} /> Scale
+                  </h4>
+                  <div className="flex gap-2">
+                    {(['0.9', '0.95', '1', '1.05', '1.1'] as const).map(scale => (
+                      <button
+                        key={scale}
+                        onClick={() => updateThemeScale(parseFloat(scale) as ThemeScale)}
+                        className={`flex-1 py-2 border text-xs font-mono transition-all ${currentTheme.scale === parseFloat(scale) ? 'bg-ink text-white border-ink' : 'bg-white border-zinc-200 hover:border-zinc-300'}`}
+                      >
+                        {parseFloat(scale) * 100}%
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <h4 className="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-4 flex items-center gap-2">
+                    <Square size={14} /> Border Radius
+                  </h4>
+                  <div className="flex gap-2">
+                    {(['none', 'sm', 'md', 'lg', 'full'] as BorderRadius[]).map(radius => (
+                      <button
+                        key={radius}
+                        onClick={() => updateThemeRadius(radius)}
+                        className={`flex-1 py-2 border text-xs font-mono capitalize transition-all ${currentTheme.borderRadius === radius ? 'bg-ink text-white border-ink' : 'bg-white border-zinc-200 hover:border-zinc-300'}`}
+                      >
+                        {radius}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Colors Section */}
+              <div>
+                <h4 className="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-4 flex items-center gap-2">
+                  <Palette size={14} /> Color Palette
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-xs font-mono text-zinc-400 mb-2">Accent Color</label>
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="color"
+                        value={currentTheme.colors.accent}
+                        onChange={(e) => updateThemeColors({ accent: e.target.value })}
+                        className="w-10 h-10 rounded cursor-pointer border-0 p-0"
+                      />
+                      <span className="font-mono text-sm text-zinc-600">{currentTheme.colors.accent}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-mono text-zinc-400 mb-2">Ink Color</label>
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="color"
+                        value={currentTheme.colors.ink}
+                        onChange={(e) => updateThemeColors({ ink: e.target.value })}
+                        className="w-10 h-10 rounded cursor-pointer border-0 p-0"
+                      />
+                      <span className="font-mono text-sm text-zinc-600">{currentTheme.colors.ink}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>

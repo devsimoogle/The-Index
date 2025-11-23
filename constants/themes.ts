@@ -4,6 +4,9 @@ export const THEMES: Record<string, Theme> = {
     classic: {
         id: 'classic',
         name: 'The Index (Classic)',
+        layout: 'classic',
+        borderRadius: 'none',
+        scale: 1,
         colors: {
             paper: '#ffffff',
             ink: '#0a0a0a',
@@ -20,6 +23,9 @@ export const THEMES: Record<string, Theme> = {
     midnight: {
         id: 'midnight',
         name: 'Midnight Archive',
+        layout: 'grid',
+        borderRadius: 'lg',
+        scale: 1,
         colors: {
             paper: '#0f172a',
             ink: '#e2e8f0',
@@ -36,6 +42,9 @@ export const THEMES: Record<string, Theme> = {
     sepia: {
         id: 'sepia',
         name: 'Sepia Manuscript',
+        layout: 'classic',
+        borderRadius: 'sm',
+        scale: 1.05,
         colors: {
             paper: '#fdf6e3',
             ink: '#433422',
@@ -52,6 +61,9 @@ export const THEMES: Record<string, Theme> = {
     cyber: {
         id: 'cyber',
         name: 'Cyber Librarian',
+        layout: 'minimal',
+        borderRadius: 'none',
+        scale: 0.95,
         colors: {
             paper: '#050505',
             ink: '#00ff41',

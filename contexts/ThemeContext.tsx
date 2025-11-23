@@ -1,11 +1,15 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Theme } from '../types/theme';
+import { Theme, LayoutTemplate, ThemeFonts, BorderRadius, ThemeScale } from '../types/theme';
 import { THEMES, DEFAULT_THEME } from '../constants/themes';
 
 interface ThemeContextType {
     currentTheme: Theme;
     setTheme: (themeId: string) => void;
     updateThemeColors: (colors: Partial<Theme['colors']>) => void;
+    updateThemeLayout: (layout: LayoutTemplate) => void;
+    updateThemeFonts: (fonts: Partial<ThemeFonts>) => void;
+    updateThemeScale: (scale: ThemeScale) => void;
+    updateThemeRadius: (radius: BorderRadius) => void;
     availableThemes: Theme[];
 }
 
@@ -46,7 +50,34 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         root.style.setProperty('--font-sans', currentTheme.fonts.sans);
         root.style.setProperty('--font-mono', currentTheme.fonts.mono);
 
+        // Scale (Base Font Size)
+        const scalePercentage = (currentTheme.scale || 1) * 100;
+        root.style.fontSize = `${scalePercentage}%`;
+
+        // Border Radius
+        const radiusMap: Record<BorderRadius, string> = {
+            'none': '0px',
+            'sm': '0.25rem',
+            'md': '0.5rem',
+            'lg': '1rem',
+            'full': '9999px'
+        };
+        root.style.setProperty('--radius', radiusMap[currentTheme.borderRadius || 'none']);
+
     }, [currentTheme]);
+
+    const updateTheme = (updates: Partial<Theme>) => {
+        setCurrentThemeState(prev => {
+            const newTheme = {
+                ...prev,
+                id: 'custom',
+                name: 'Custom Theme',
+                ...updates
+            };
+            localStorage.setItem('lis_journal_custom_theme', JSON.stringify(newTheme));
+            return newTheme;
+        });
+    };
 
     const setTheme = (themeId: string) => {
         const theme = THEMES[themeId];
@@ -58,16 +89,23 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
 
     const updateThemeColors = (colors: Partial<Theme['colors']>) => {
-        setCurrentThemeState(prev => {
-            const newTheme = {
-                ...prev,
-                id: 'custom',
-                name: 'Custom Theme',
-                colors: { ...prev.colors, ...colors }
-            };
-            localStorage.setItem('lis_journal_custom_theme', JSON.stringify(newTheme));
-            return newTheme;
-        });
+        updateTheme({ colors: { ...currentTheme.colors, ...colors } });
+    };
+
+    const updateThemeLayout = (layout: LayoutTemplate) => {
+        updateTheme({ layout });
+    };
+
+    const updateThemeFonts = (fonts: Partial<ThemeFonts>) => {
+        updateTheme({ fonts: { ...currentTheme.fonts, ...fonts } });
+    };
+
+    const updateThemeScale = (scale: ThemeScale) => {
+        updateTheme({ scale });
+    };
+
+    const updateThemeRadius = (borderRadius: BorderRadius) => {
+        updateTheme({ borderRadius });
     };
 
     return (
@@ -75,6 +113,10 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             currentTheme,
             setTheme,
             updateThemeColors,
+            updateThemeLayout,
+            updateThemeFonts,
+            updateThemeScale,
+            updateThemeRadius,
             availableThemes: Object.values(THEMES)
         }}>
             {children}
