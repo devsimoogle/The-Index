@@ -78,11 +78,11 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === 'admin' || password === 'lis403') {
+    if (password === 'admin' || password === 'lis_secure_2025') {
       setIsAuthenticated(true);
       storageService.setAdminSession();
     } else {
-      alert('Incorrect password');
+      alert('Access Denied: Incorrect credentials.');
     }
   };
 
@@ -283,22 +283,56 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
 
   if (!isAuthenticated) {
     return (
-      <div className="max-w-md mx-auto py-24 px-6">
-        <div className="bg-zinc-50 border border-zinc-100 p-8 text-center">
-          <h2 className="font-serif text-2xl mb-6">Restricted Access</h2>
-          <p className="mb-6 text-sm text-zinc-500">Please enter credentials to access the editorial system.</p>
-          <form onSubmit={handleLogin} className="space-y-4">
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
-              className="w-full p-2 border border-zinc-200 focus:outline-none focus:border-ink font-mono text-sm"
-            />
-            <button type="submit" className="w-full bg-ink text-white py-2 font-mono text-xs uppercase tracking-widest">
-              Login
-            </button>
-          </form>
+      <div className="min-h-[80vh] flex items-center justify-center relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0 bg-gradient-to-br from-zinc-50 to-zinc-200 -z-20" />
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 opacity-30">
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-200 rounded-full blur-[100px] animate-pulse" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-200 rounded-full blur-[100px] animate-pulse delay-1000" />
+        </div>
+
+        <div className="w-full max-w-md mx-4">
+          <div className="bg-white/70 backdrop-blur-xl border border-white/50 shadow-2xl rounded-2xl p-8 md:p-12 relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+            <div className="text-center mb-10 relative z-10">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-black text-white mb-6 shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+                <Sparkles size={24} />
+              </div>
+              <h2 className="font-serif text-3xl md:text-4xl text-zinc-900 mb-3 tracking-tight">Welcome Back</h2>
+              <p className="text-zinc-500 font-sans text-sm">Enter your credentials to access the editorial desk.</p>
+            </div>
+
+            <form onSubmit={handleLogin} className="space-y-6 relative z-10">
+              <div className="space-y-2">
+                <label className="text-xs font-mono uppercase tracking-widest text-zinc-500 ml-1">Password</label>
+                <div className="relative group/input">
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Enter access code..."
+                    className="w-full px-4 py-3 bg-white/50 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-black transition-all duration-300 placeholder:text-zinc-300 font-mono text-sm"
+                  />
+                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover/input:opacity-100 pointer-events-none transition-opacity duration-300" />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-black text-white py-4 rounded-xl font-mono text-xs uppercase tracking-widest hover:bg-zinc-800 transform active:scale-[0.98] transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 group/btn"
+              >
+                <span>Access Dashboard</span>
+                <Zap size={14} className="group-hover/btn:fill-white transition-colors" />
+              </button>
+            </form>
+
+            <div className="mt-8 text-center">
+              <p className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">
+                Secure System • LIS Journal
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     );

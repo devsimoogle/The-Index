@@ -126,7 +126,7 @@ A library blog open source project created as an alternative to WordPress. A mod
 
 ### Admin Access
 - Navigate to `/admin`
-- Default passwords: `admin` or `lis403`
+- Default passwords: `admin` or `lis_secure_2025`
 
 ### Creating Posts
 1. Login to admin panel
