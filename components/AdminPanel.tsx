@@ -206,6 +206,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
       readTime,
       coverImage,
       status: finalStatus
+
     };
 
     onAddPost(newPost);
@@ -328,7 +329,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
               </button>
             </form>
 
-            <div className="mt-8 text-center">
+            <div className="mt-12 text-center pb-2">
               <p className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">
                 Secure System • The Index
               </p>
