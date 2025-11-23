@@ -1,6 +1,8 @@
 # 📚 The Index: LIS Journal
 
-A modern, elegant digital journal exploring the intersection of library science, technology, and culture. Built as a project for LIS403.
+A library blog open source project created as an alternative to WordPress. A modern, elegant digital journal exploring the intersection of library science, technology, and culture. Built as a class project.
+
+**Repository:** [https://github.com/devsimoogle/The-Index/](https://github.com/devsimoogle/The-Index/)
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Node](https://img.shields.io/badge/node-v18+-green.svg)
@@ -64,7 +66,7 @@ A modern, elegant digital journal exploring the intersection of library science,
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/devsimoogle/lis-journal.git
+   git clone https://github.com/devsimoogle/The-Index.git
    cd lis-journal
    ```
 
@@ -143,8 +145,6 @@ This application can be deployed using:
 - **Backend**: Railway, Render, or Heroku
 - **Database**: Railway PostgreSQL, Render PostgreSQL, or Heroku Postgres
 
-See **[DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)** for detailed instructions.
-
 ### Quick Deploy (Recommended)
 
 **Frontend (Vercel)**:
@@ -160,8 +160,6 @@ railway login
 cd server
 railway up
 ```
-
-See **[DEPLOYMENT_CHECKLIST.md](./DEPLOYMENT_CHECKLIST.md)** for step-by-step deployment.
 
 ## 📁 Project Structure
 
@@ -223,13 +221,6 @@ This project is licensed under the MIT License.
 ## 👨‍💻 Author
 
 **Olajuwon O.**
-
-## 📚 Documentation
-
-- [Deployment Guide](./DEPLOYMENT_GUIDE.md) - Full deployment instructions
-- [Deployment Checklist](./DEPLOYMENT_CHECKLIST.md) - Step-by-step deployment
-- [Quick Fix Guide](./QUICK_FIX_GUIDE.md) - Troubleshooting
-- [Seeding Guide](./server/SEEDING_GUIDE.md) - Database seeding
 
 ## 🐛 Known Issues
 
