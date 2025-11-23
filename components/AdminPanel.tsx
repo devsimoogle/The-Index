@@ -5,8 +5,9 @@ import { storageService } from '../services/storage';
 import { TipTapEditor } from './TipTapEditor';
 import {
   Plus, Save, Database, Image as ImageIcon, X, Trash2, Eye, FileText,
-  Bold, Italic, List, Heading2, Quote, Search, CheckCircle, CircleDashed, AlertTriangle, LogOut, Edit, EyeOff, Sparkles, Zap, BookOpen
+  Bold, Italic, List, Heading2, Quote, Search, CheckCircle, CircleDashed, AlertTriangle, LogOut, Edit, EyeOff, Sparkles, Zap, BookOpen, Palette
 } from 'lucide-react';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface AdminPanelProps {
   posts: BlogPost[];
@@ -14,7 +15,7 @@ interface AdminPanelProps {
   onDeletePost: (postId: string) => void;
 }
 
-type Tab = 'create' | 'manage';
+type Tab = 'create' | 'manage' | 'appearance';
 type PostStatus = 'published' | 'draft';
 
 // Utility function to calculate read time
@@ -27,6 +28,7 @@ const calculateReadTime = (content: string): string => {
 };
 
 export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDeletePost }) => {
+  const { currentTheme, setTheme, updateThemeColors, availableThemes } = useTheme();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [activeTab, setActiveTab] = useState<Tab>('create');
@@ -329,7 +331,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
               </button>
             </form>
 
-            <div className="mt-12 text-center pb-2">
+            <div className="mt-8 text-center">
               <p className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">
                 Secure System • The Index
               </p>
@@ -372,6 +374,12 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
           className={`pb-3 font-mono text-xs uppercase tracking-widest transition-colors flex items-center gap-2 ${activeTab === 'manage' ? 'border-b-2 border-ink text-ink' : 'text-zinc-400 hover:text-zinc-600'}`}
         >
           <FileText size={14} /> Manage Posts
+        </button>
+        <button
+          onClick={() => setActiveTab('appearance')}
+          className={`pb-3 font-mono text-xs uppercase tracking-widest transition-colors flex items-center gap-2 ${activeTab === 'appearance' ? 'border-b-2 border-ink text-ink' : 'text-zinc-400 hover:text-zinc-600'}`}
+        >
+          <Palette size={14} /> Appearance
         </button>
       </div>
 
@@ -609,7 +617,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
             </button>
           </div>
         </form>
-      ) : (
+      ) : activeTab === 'manage' ? (
         /* Manage Tab */
         <div className="bg-white border border-zinc-100 shadow-xl min-h-[600px]">
           {/* Toolbar */}
@@ -690,6 +698,82 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
                 No posts found matching your criteria.
               </div>
             )}
+          </div>
+        </div>
+      ) : (
+        /* Appearance Tab */
+        <div className="bg-white border border-zinc-100 shadow-xl p-8">
+          <div className="max-w-3xl mx-auto">
+            <div className="mb-10 text-center">
+              <h3 className="font-serif text-3xl text-ink mb-4">Visual Identity</h3>
+              <p className="font-mono text-xs text-zinc-400 uppercase tracking-widest">Customize the journal's aesthetic</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+              {availableThemes.map(theme => (
+                <button
+                  key={theme.id}
+                  onClick={() => setTheme(theme.id)}
+                  className={`group relative p-6 border-2 text-left transition-all duration-300 ${currentTheme.id === theme.id ? 'border-ink ring-1 ring-ink' : 'border-zinc-100 hover:border-zinc-300'}`}
+                >
+                  <div className="flex justify-between items-start mb-4">
+                    <span className={`font-serif text-xl ${currentTheme.id === theme.id ? 'text-ink' : 'text-zinc-600'}`}>{theme.name}</span>
+                    {currentTheme.id === theme.id && <CheckCircle size={18} className="text-ink" />}
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-3">
+                      <div className="w-6 h-6 rounded-full border border-zinc-200" style={{ backgroundColor: theme.colors.paper }}></div>
+                      <span className="text-xs font-mono text-zinc-400 uppercase">Paper</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="w-6 h-6 rounded-full border border-zinc-200" style={{ backgroundColor: theme.colors.ink }}></div>
+                      <span className="text-xs font-mono text-zinc-400 uppercase">Ink</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="w-6 h-6 rounded-full border border-zinc-200" style={{ backgroundColor: theme.colors.accent }}></div>
+                      <span className="text-xs font-mono text-zinc-400 uppercase">Accent</span>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 pt-4 border-t border-zinc-100">
+                    <p className="font-serif text-sm opacity-70" style={{ color: theme.colors.ink }}>
+                      "The library is a growing organism."
+                    </p>
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            <div className="bg-zinc-50 p-8 border border-zinc-200 rounded-lg">
+              <h4 className="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-6">Fine Tuning</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-xs font-mono text-zinc-400 mb-2">Accent Color</label>
+                  <div className="flex items-center gap-3">
+                    <input
+                      type="color"
+                      value={currentTheme.colors.accent}
+                      onChange={(e) => updateThemeColors({ accent: e.target.value })}
+                      className="w-10 h-10 rounded cursor-pointer border-0 p-0"
+                    />
+                    <span className="font-mono text-sm text-zinc-600">{currentTheme.colors.accent}</span>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-xs font-mono text-zinc-400 mb-2">Ink Color</label>
+                  <div className="flex items-center gap-3">
+                    <input
+                      type="color"
+                      value={currentTheme.colors.ink}
+                      onChange={(e) => updateThemeColors({ ink: e.target.value })}
+                      className="w-10 h-10 rounded cursor-pointer border-0 p-0"
+                    />
+                    <span className="font-mono text-sm text-zinc-600">{currentTheme.colors.ink}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
