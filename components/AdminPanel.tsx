@@ -11,6 +11,7 @@ import {
 import { useTheme } from '../contexts/ThemeContext';
 import { LayoutTemplate, ThemeScale, BorderRadius } from '../types/theme';
 import { PREMADE_TEMPLATES } from '../constants/templates';
+import { Toast } from './Toast';
 
 interface AdminPanelProps {
   posts: BlogPost[];
@@ -37,6 +38,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
   } = useTheme();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<Tab>('create');
 
   // Form State
@@ -227,7 +229,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
     setPendingPublishStatus(null);
 
     // Show success message
-    alert(editingPostId
+    setToastMessage(editingPostId
       ? `Post updated successfully as ${finalStatus}!`
       : `Post ${finalStatus === 'published' ? 'published' : 'saved as draft'} successfully!`
     );
@@ -269,7 +271,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
       onDeletePost(postToDelete);
       setShowDeleteModal(false);
       setPostToDelete(null);
-      alert('Post deleted successfully!');
+      setToastMessage('Post deleted successfully!');
     }
   };
 
@@ -722,7 +724,10 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
               {availableThemes.map(theme => (
                 <button
                   key={theme.id}
-                  onClick={() => setTheme(theme.id)}
+                  onClick={() => {
+                    setTheme(theme.id);
+                    setToastMessage(`Theme "${theme.name}" applied successfully!`);
+                  }}
                   className={`group relative p-4 lg:p-6 border text-left transition-all duration-300 ${currentTheme.id === theme.id ? 'border-ink ring-1 ring-ink shadow-md' : 'border-zinc-200 hover:border-zinc-300 shadow-sm'}`}
                 >
                   <div className="flex justify-between items-start mb-3 lg:mb-4">
@@ -834,7 +839,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
                         onClick={() => updateThemeScale(parseFloat(scale) as ThemeScale)}
                         className={`py-2.5 lg:py-2 border text-[10px] lg:text-xs font-mono transition-all ${currentTheme.scale === parseFloat(scale) ? 'bg-ink text-white border-ink' : 'bg-white border-zinc-200 hover:border-zinc-300'}`}
                       >
-                        {parseFloat(scale) * 100}%
+                        {Math.round(parseFloat(scale) * 100)}%
                       </button>
                     ))}
                   </div>
@@ -935,6 +940,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
                           updateThemeFonts(theme.fonts);
                           updateThemeRadius(theme.borderRadius);
                           updateThemeScale(theme.scale as ThemeScale);
+                          setToastMessage(`Template "${template.name}" applied successfully!`);
                         }}
                         className="w-full bg-ink text-white py-2.5 lg:py-2 text-xs font-mono uppercase tracking-widest hover:bg-zinc-800 transition-colors"
                       >
@@ -1065,6 +1071,14 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
             </div>
           </div>
         </div>
+      )}
+
+      {/* Toast Notification */}
+      {toastMessage && (
+        <Toast
+          message={toastMessage}
+          onClose={() => setToastMessage(null)}
+        />
       )}
     </div>
   );
