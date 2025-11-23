@@ -1,6 +1,6 @@
 # 📚 The Index: LIS Journal
 
-A modern, elegant digital journal exploring the intersection of library science, technology, and culture. Built as a classwork project for LIS403.
+A modern, elegant digital journal exploring the intersection of library science, technology, and culture. Built as a project for LIS403.
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Node](https://img.shields.io/badge/node-v18+-green.svg)
@@ -64,7 +64,7 @@ A modern, elegant digital journal exploring the intersection of library science,
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/lis-journal.git
+   git clone https://github.com/devsimoogle/lis-journal.git
    cd lis-journal
    ```
 
@@ -224,14 +224,7 @@ This project is licensed under the MIT License.
 
 **Olajuwon O.**
 - Course: LIS403
-- Project: Library and Information Science Journal
-
-## 🙏 Acknowledgments
-
-- Google Gemini AI for AI features
-- React and Vite communities
-- PostgreSQL team
-- All contributors and testers
+- Project: A Blog creation
 
 ## 📚 Documentation
 
@@ -263,6 +256,6 @@ For issues and questions:
 
 ---
 
-**Made with ❤️ for LIS403**
+**Made with ❤️ By Olajuwon**
 
 *Exploring the future of library science, one post at a time.*
