@@ -709,7 +709,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
             )}
           </div>
         </div>
-      ) : (
+      ) : activeTab === 'appearance' ? (
         /* Appearance Tab */
         <div className="bg-white border border-zinc-100 shadow-xl p-8">
           <div className="max-w-3xl mx-auto">
@@ -894,82 +894,82 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
           </div>
         </div>
       ) : activeTab === 'templates' ? (
-      <div className="bg-white border border-zinc-100 shadow-xl p-4 lg:p-8">
-        <div className="max-w-5xl mx-auto">
-          <div className="mb-8 lg:mb-10 text-center">
-            <h3 className="font-serif text-2xl lg:text-3xl text-ink mb-3 lg:mb-4">Pre-made Templates</h3>
-            <p className="font-mono text-xs text-zinc-400 uppercase tracking-widest">Professional designs ready to use</p>
-          </div>
+        <div className="bg-white border border-zinc-100 shadow-xl p-4 lg:p-8">
+          <div className="max-w-5xl mx-auto">
+            <div className="mb-8 lg:mb-10 text-center">
+              <h3 className="font-serif text-2xl lg:text-3xl text-ink mb-3 lg:mb-4">Pre-made Templates</h3>
+              <p className="font-mono text-xs text-zinc-400 uppercase tracking-widest">Professional designs ready to use</p>
+            </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 mb-10 lg:mb-12">
-            {PREMADE_TEMPLATES.map(template => {
-              const IconComponent = template.previewIcon === 'BookOpen' ? BookOpen :
-                template.previewIcon === 'Sparkles' ? Sparkles : Zap;
-              return (
-                <div
-                  key={template.id}
-                  className="group border border-zinc-200 hover:border-ink transition-all duration-300 overflow-hidden"
-                >
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 mb-10 lg:mb-12">
+              {PREMADE_TEMPLATES.map(template => {
+                const IconComponent = template.previewIcon === 'BookOpen' ? BookOpen :
+                  template.previewIcon === 'Sparkles' ? Sparkles : Zap;
+                return (
                   <div
-                    className="h-32 lg:h-40 flex items-center justify-center"
-                    style={{ backgroundColor: template.theme.colors.mist }}
+                    key={template.id}
+                    className="group border border-zinc-200 hover:border-ink transition-all duration-300 overflow-hidden"
                   >
-                    <IconComponent size={48} style={{ color: template.theme.colors.accent }} />
-                  </div>
-
-                  <div className="p-4 lg:p-6">
-                    <h4 className="font-serif text-lg lg:text-xl text-ink mb-2">{template.name}</h4>
-                    <p className="text-xs lg:text-sm text-zinc-500 mb-4 line-clamp-2">{template.description}</p>
-
-                    <div className="flex gap-1.5 mb-4">
-                      <div className="w-6 h-6 rounded-full border border-zinc-200" style={{ backgroundColor: template.theme.colors.paper }}></div>
-                      <div className="w-6 h-6 rounded-full border border-zinc-200" style={{ backgroundColor: template.theme.colors.ink }}></div>
-                      <div className="w-6 h-6 rounded-full border border-zinc-200" style={{ backgroundColor: template.theme.colors.accent }}></div>
+                    <div
+                      className="h-32 lg:h-40 flex items-center justify-center"
+                      style={{ backgroundColor: template.theme.colors.mist }}
+                    >
+                      <IconComponent size={48} style={{ color: template.theme.colors.accent }} />
                     </div>
 
-                    <button
-                      onClick={() => {
-                        const { theme } = template;
-                        updateThemeLayout(theme.layout);
-                        updateThemeColors(theme.colors);
-                        updateThemeFonts(theme.fonts);
-                        updateThemeRadius(theme.borderRadius);
-                        updateThemeScale(theme.scale as ThemeScale);
-                      }}
-                      className="w-full bg-ink text-white py-2.5 lg:py-2 text-xs font-mono uppercase tracking-widest hover:bg-zinc-800 transition-colors"
-                    >
-                      Apply Template
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+                    <div className="p-4 lg:p-6">
+                      <h4 className="font-serif text-lg lg:text-xl text-ink mb-2">{template.name}</h4>
+                      <p className="text-xs lg:text-sm text-zinc-500 mb-4 line-clamp-2">{template.description}</p>
 
-          <div className="bg-zinc-50 border border-zinc-200 p-4 lg:p-6 rounded-lg">
-            <h4 className="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-3 flex items-center gap-2">
-              <Type size={14} /> Template Editor
-            </h4>
-            <p className="text-sm text-zinc-600 mb-4">
-              After applying a template, you can further customize it in the <strong>Appearance</strong> tab. All changes are saved automatically.
-            </p>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 text-xs">
-              <div className="flex items-start gap-2">
-                <CheckCircle size={14} className="text-green-600 flex-shrink-0 mt-0.5" />
-                <span className="text-zinc-600">Instant preview</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <CheckCircle size={14} className="text-green-600 flex-shrink-0 mt-0.5" />
-                <span className="text-zinc-600">Full customization</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <CheckCircle size={14} className="text-green-600 flex-shrink-0 mt-0.5" />
-                <span className="text-zinc-600">Auto-save enabled</span>
+                      <div className="flex gap-1.5 mb-4">
+                        <div className="w-6 h-6 rounded-full border border-zinc-200" style={{ backgroundColor: template.theme.colors.paper }}></div>
+                        <div className="w-6 h-6 rounded-full border border-zinc-200" style={{ backgroundColor: template.theme.colors.ink }}></div>
+                        <div className="w-6 h-6 rounded-full border border-zinc-200" style={{ backgroundColor: template.theme.colors.accent }}></div>
+                      </div>
+
+                      <button
+                        onClick={() => {
+                          const { theme } = template;
+                          updateThemeLayout(theme.layout);
+                          updateThemeColors(theme.colors);
+                          updateThemeFonts(theme.fonts);
+                          updateThemeRadius(theme.borderRadius);
+                          updateThemeScale(theme.scale as ThemeScale);
+                        }}
+                        className="w-full bg-ink text-white py-2.5 lg:py-2 text-xs font-mono uppercase tracking-widest hover:bg-zinc-800 transition-colors"
+                      >
+                        Apply Template
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="bg-zinc-50 border border-zinc-200 p-4 lg:p-6 rounded-lg">
+              <h4 className="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-3 flex items-center gap-2">
+                <Type size={14} /> Template Editor
+              </h4>
+              <p className="text-sm text-zinc-600 mb-4">
+                After applying a template, you can further customize it in the <strong>Appearance</strong> tab. All changes are saved automatically.
+              </p>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 text-xs">
+                <div className="flex items-start gap-2">
+                  <CheckCircle size={14} className="text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-zinc-600">Instant preview</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle size={14} className="text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-zinc-600">Full customization</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle size={14} className="text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-zinc-600">Auto-save enabled</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
       ) : null}
 
       {/* Delete Confirmation Modal */}
