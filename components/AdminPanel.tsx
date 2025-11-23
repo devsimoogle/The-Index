@@ -5,7 +5,7 @@ import { storageService } from '../services/storage';
 import { TipTapEditor } from './TipTapEditor';
 import {
   Plus, Save, Database, Image as ImageIcon, X, Trash2, Eye, FileText,
-  Bold, Italic, List, Heading2, Quote, Search, CheckCircle, CircleDashed, AlertTriangle, LogOut, Edit, EyeOff, Sparkles, Zap
+  Bold, Italic, List, Heading2, Quote, Search, CheckCircle, CircleDashed, AlertTriangle, LogOut, Edit, EyeOff, Sparkles, Zap, BookOpen
 } from 'lucide-react';
 
 interface AdminPanelProps {
@@ -279,11 +279,12 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
     const matchesSearch = post.title.toLowerCase().includes(manageSearch.toLowerCase()) || post.id.includes(manageSearch);
     const matchesFilter = manageFilter === 'all' || (post.status || 'published') === manageFilter;
     return matchesSearch && matchesFilter;
+    // return matchSearch && matchesFilter onmessage(keyboardShortcut.value()); 
   });
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-[80vh] flex items-center justify-center relative overflow-hidden">
+      <div className="min-h-[80vh] flex items-center justify-center relative overflow-hidden px-4">
         {/* Background Elements */}
         <div className="absolute inset-0 bg-gradient-to-br from-zinc-50 to-zinc-200 -z-20" />
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 opacity-30">
@@ -291,13 +292,13 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
           <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-200 rounded-full blur-[100px] animate-pulse delay-1000" />
         </div>
 
-        <div className="w-full max-w-md mx-4">
-          <div className="bg-white/70 backdrop-blur-xl border border-white/50 shadow-2xl rounded-2xl p-8 md:p-12 relative overflow-hidden group">
+        <div className="w-full max-w-md">
+          <div className="bg-white/70 backdrop-blur-xl border border-white/50 shadow-lg rounded-2xl p-6 md:p-12 relative overflow-hidden group">
             <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-            <div className="text-center mb-10 relative z-10">
+            <div className="text-center mb-8 md:mb-10 relative z-10">
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-black text-white mb-6 shadow-lg transform group-hover:scale-110 transition-transform duration-300">
-                <Sparkles size={24} />
+                <BookOpen size={24} />
               </div>
               <h2 className="font-serif text-3xl md:text-4xl text-zinc-900 mb-3 tracking-tight">Welcome Back</h2>
               <p className="text-zinc-500 font-sans text-sm">Enter your credentials to access the editorial desk.</p>
@@ -329,7 +330,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ posts, onAddPost, onDele
 
             <div className="mt-8 text-center">
               <p className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">
-                Secure System • LIS Journal
+                Secure System • The Index
               </p>
             </div>
           </div>
